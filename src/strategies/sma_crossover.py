@@ -1,7 +1,12 @@
+"""
+Simple Moving Average (SMA) Crossover Strategy Implementation
+"""
+
 import numpy as np
 import pandas as pd
 
 from src.strategies.interfaces import IStrategy
+from src.strategies.exceptions import InvalidDataError
 
 
 class SMACrossoverStrategy(IStrategy):
@@ -9,18 +14,45 @@ class SMACrossoverStrategy(IStrategy):
         self.data = data
         self.short_window = short_window
         self.long_window = long_window
+        self.validate_data()
+
+    def validate_data(self) -> None:
+        """Validate the input data for the strategy."""
+
+        if not isinstance(self.data, pd.DataFrame):
+            raise InvalidDataError("Data must be a pandas DataFrame.")
+
+        if self.data.empty:
+            raise InvalidDataError("Data cannot be empty.")
+
+        if "Close" not in self.data.columns:
+            raise InvalidDataError(
+                "Data must contain a 'Close' column for SMA calculations."
+            )
+
+        if len(self.data) < max(self.short_window, self.long_window):
+            raise InvalidDataError(
+                "Data length must be greater than the maximum of short and long window sizes."
+            )
 
     def generate_signals(self) -> pd.DataFrame:
-        signals = pd.DataFrame(index=self.data.index)
-        
-        signals['short_mavg'] = self.data['Close'].rolling(window=self.short_window, min_periods=1).mean()
-        signals['long_mavg'] = self.data['Close'].rolling(window=self.long_window, min_periods=1).mean()
-        
-        signals['signal'] = 0
-        signals['signal'][self.short_window:] = np.where(
-            signals['short_mavg'][self.short_window:] > signals['long_mavg'][self.short_window:], 1, 0
-        )
-        
-        signals['positions'] = signals['signal'].diff()
-        
-        return signals
+        """
+        Generate trading signals based on SMA crossover strategy.
+
+        Signals:
+        - 1 for long position (short SMA crosses above long SMA) = bullish crossover
+        - -1 for short position (short SMA crosses below long SMA) = bearish crossover
+        - 0 for no position (no crossover) = hold position
+        """
+        df = self.data.copy()
+
+        df["Short_MA"] = df["Close"].rolling(window=self.short_window).mean()
+        df["Long_MA"] = df["Close"].rolling(window=self.long_window).mean()
+
+        df["Signal"] = 0
+        df["Signal"] = np.where(df["Short_MA"] > df["Long_MA"], 1, 0)
+        df["Signal"] = np.where(df["Short_MA"] < df["Long_MA"], -1, df["Signal"])
+
+        df["Signal"] = df["Signal"].shift(1)
+
+        return df
