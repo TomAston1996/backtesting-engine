@@ -1,0 +1,8 @@
+{
+    "python.testing.pytestArgs": [
+        "--cov-config=.coveragerc",
+        "--cov=src",
+        "tests"
+    ],
+    "python.testing.pytestEnabled": true,
+}

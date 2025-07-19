@@ -1,6 +1,6 @@
-'''
+"""
 This module defines the IStrategy interface that all trading strategies must implement.
-'''
+"""
 
 from abc import ABC, abstractmethod
 
@@ -8,7 +8,6 @@ import pandas as pd
 
 
 class IStrategy(ABC):
-    
     @abstractmethod
     def generate_signals(self) -> pd.DataFrame:
         """
@@ -23,4 +22,3 @@ class IStrategy(ABC):
         Validate the data before running the strategy.
         """
         pass
-
