@@ -1,5 +1,20 @@
 """
 Simple Moving Average (SMA) Crossover Strategy Implementation
+
+SMA Crossover Strategy is a popular trading strategy used in financial markets.
+
+SMA is a technical indicator that calculates the average of a selected range of prices between
+a specific number of periods:
+
+SMA = (P1 + P2 + ... + Pn) / n
+
+The SMS Crossover Strategy calculates the short-term and long-term Simple Moving Averages (SMA) of 
+the assets closing prices. A signal is generated based on the crossover of these two SMAs. If the
+short-term SMA crosses above the long-term SMA (short-term SMA > long-term SMA), it indicates a potential 
+bullish trend, and a buy signal is generated (1). Conversely, if the short-term SMA crosses below the 
+long-term SMA (short-term SMA < long-term SMA), it indicates a potential bearish trend, and a sell signal 
+is generated (-1). If there is no crossover, the signal remains at 0, indicating that no action should be
+taken.
 """
 
 import numpy as np
