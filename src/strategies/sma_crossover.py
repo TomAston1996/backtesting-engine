@@ -32,8 +32,6 @@ class SMACrossoverStrategy(IStrategy):
         self.validate_data()
 
     def validate_data(self) -> None:
-        """Validate the input data for the strategy."""
-
         if not isinstance(self.data, pd.DataFrame):
             raise InvalidDataError("Data must be a pandas DataFrame.")
 
@@ -51,14 +49,6 @@ class SMACrossoverStrategy(IStrategy):
             )
 
     def generate_signals(self) -> pd.DataFrame:
-        """
-        Generate trading signals based on SMA crossover strategy.
-
-        Signals:
-        - 1 for long position (short SMA crosses above long SMA) = bullish crossover
-        - -1 for short position (short SMA crosses below long SMA) = bearish crossover
-        - 0 for no position (no crossover) = hold position
-        """
         df = self.data.copy()
 
         df["Short_MA"] = df["Close"].rolling(window=self.short_window).mean()
