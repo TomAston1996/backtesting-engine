@@ -1,4 +1,5 @@
 from data.data_loader import load_data
+
 from backtesting_engine.engine import BTXEngine
 from backtesting_engine.interfaces import EngineContext
 from backtesting_engine.strategies.sma_crossover import SMACrossoverStrategy

@@ -20,8 +20,8 @@ taken.
 import numpy as np
 import pandas as pd
 
-from backtesting_engine.strategies.interfaces import IStrategy
 from backtesting_engine.strategies.exceptions import InvalidDataError
+from backtesting_engine.strategies.interfaces import IStrategy
 
 
 class SMACrossoverStrategy(IStrategy):
