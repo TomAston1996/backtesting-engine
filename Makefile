@@ -11,3 +11,11 @@ format: install
 
 test: install
 	uv run pytest --cov-report=term-missing -vv
+
+audit: install
+	uv export --format requirements-txt > requirements.txt \
+	&& uvx pip-audit -r requirements.txt \
+		--disable-pip \
+		--strict \
+		--fix \
+	&& rm requirements.txt
