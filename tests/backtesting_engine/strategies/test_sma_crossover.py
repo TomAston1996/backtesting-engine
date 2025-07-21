@@ -1,7 +1,7 @@
 import pandas as pd
 import pytest
-from src.strategies.sma_crossover import SMACrossoverStrategy
-from src.strategies.exceptions import InvalidDataError
+from backtesting_engine.strategies.sma_crossover import SMACrossoverStrategy
+from backtesting_engine.strategies.exceptions import InvalidDataError
 
 
 @pytest.fixture
