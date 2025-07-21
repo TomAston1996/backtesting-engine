@@ -2,8 +2,8 @@
 This module implements the backtesting engine for executing trading strategies.
 """
 
-from src.strategies.interfaces import IStrategy
-from src.backtesting_engine.interfaces import EngineContext
+from backtesting_engine.strategies.interfaces import IStrategy
+from backtesting_engine.interfaces import EngineContext
 
 
 class BTXEngine:
