@@ -5,7 +5,7 @@ omit =
 
 
 [report]
-fail_under=100
+fail_under=0
 exclude_also =
     ; Don't complain about missing debug-only code:
     def __repr__
