@@ -20,7 +20,8 @@ taken.
 import numpy as np
 import pandas as pd
 
-from backtesting_engine.constants import CLOSE_COLUMN, LONG_MA_COLUMN, SHORT_MA_COLUMN, SIGNAL_COLUMN
+from backtesting_engine.constants import CLOSE_COLUMN, SIGNAL_COLUMN
+from backtesting_engine.strategies.constants import LONG_MA_COLUMN, SHORT_MA_COLUMN
 from backtesting_engine.strategies.exceptions import InvalidDataError
 from backtesting_engine.strategies.interfaces import IStrategy
 

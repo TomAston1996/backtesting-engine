@@ -19,6 +19,11 @@ from backtesting_engine.strategies.interfaces import IStrategy
 
 
 class BTXEngine:
+    '''
+    BTXEngine is the core backtesting engine that executes trading strategies. It processes
+    the strategy signals and updates the portfolio accordingly. It can handle multiple tickers
+    and maintains a trade log for all executed trades.
+    '''
     def __init__(self, strategy: IStrategy, context: EngineContext) -> None:
         self.strategy = strategy
         self.data = context.data.copy()
@@ -29,10 +34,10 @@ class BTXEngine:
 
         self.trade_log: list[TradeLogEntry] = []
 
-    def run_backtest(self) -> None:
-        """
-        Run the backtest using the provided strategy and context.
-        """
+    def run_backtest(self) -> pd.DataFrame:
+        '''
+        Run main backtest loop.
+        '''
         df = self.strategy.generate_signals()
 
         for ticker in self.portfolio.keys():
@@ -43,11 +48,16 @@ class BTXEngine:
         return df
 
     def _backtest_single_ticker(self, df: pd.DataFrame, ticker: str) -> pd.DataFrame:
+        '''
+        Backtest a single ticker using the strategy signals.
+        
+        This method updates the DataFrame with trading signals and portfolio values.
+        '''
         price_col = (CLOSE_COLUMN, ticker)
         signal_col = (SIGNAL_COLUMN, ticker)
 
         # Initialize portfolio columns
-        df[(CASH_COLUMN, ticker)] = self.initial_cash
+        df[(CASH_COLUMN, ticker)] = float(self.initial_cash)
         df[(POSITION_COLUMN, ticker)] = 0
         df[(HOLDINGS_COLUMN, ticker)] = 0.0
         df[(TOTAL_VALUE_COLUMN, ticker)] = 0.0
@@ -73,30 +83,45 @@ class BTXEngine:
         return df
 
     def _should_buy(self, signal: float, position: int) -> bool:
+        '''
+        Determines if a buy action should be executed based on the signal and current position.
+        
+        A buy action is executed if the signal is 1 (indicating a buy signal) and the current position is
+        0 (indicating no shares held).
+        '''
         return signal == 1 and position == 0
 
     def _should_sell(self, signal: float, position: int) -> bool:
+        '''
+        Determines if a sell action should be executed based on the signal and current position.
+
+        A sell action is executed if the signal is -1 (indicating a sell signal) and the current position is
+        greater than 0 (indicating that there are shares to sell).
+        '''
         return signal == -1 and position > 0
 
     def _execute_buy(
         self, cash: float, position: int, price: float, ticker: str, timestamp: pd.Timestamp
     ) -> tuple[int, float]:
+        '''
+        Executes a buy action, updating the cash and position accordingly.
+        '''
         shares_to_buy = cash // (price * (1 + self.slippage))
-
         cost = shares_to_buy * price * (1 + self.slippage + self.commission)
-
         if shares_to_buy > 0:
             cash -= cost
             position += shares_to_buy
             self.trade_log.append(
                 TradeLogEntry(timestamp=timestamp, ticker=ticker, action=BUY, shares=shares_to_buy, price=price)
             )
-
         return position, cash
 
     def _execute_sell(
         self, cash: float, position: int, price: float, ticker: str, timestamp: pd.Timestamp
     ) -> tuple[int, float]:
+        '''
+        Executes a sell action, updating the cash and position accordingly.
+        '''
         proceeds = position * price * (1 - self.slippage - self.commission)
         cash += proceeds
         self.trade_log.append(
@@ -108,6 +133,9 @@ class BTXEngine:
     def _update_portfolio(
         self, df: pd.DataFrame, idx: int, ticker: str, position: int, cash: float, price: float
     ) -> None:
+        '''
+        Updates the portfolio values in the DataFrame.
+        '''
         df.iat[idx, df.columns.get_loc((POSITION_COLUMN, ticker))] = position
         df.iat[idx, df.columns.get_loc((CASH_COLUMN, ticker))] = cash
         df.iat[idx, df.columns.get_loc((HOLDINGS_COLUMN, ticker))] = position * price
