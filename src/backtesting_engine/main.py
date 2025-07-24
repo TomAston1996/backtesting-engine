@@ -9,11 +9,7 @@ if __name__ == "__main__":
     START_DATE = "2020-01-01"
     END_DATE = "2023-01-01"
 
-    print(f"Loading data for {TICKER} from {START_DATE} to {END_DATE}...")
-    
     data = load_data(TICKER, START_DATE, END_DATE)
-
-    print("Data loaded successfully:\n", data.head())
 
     engine = BTXEngine(
         strategy=SMACrossoverStrategy(data=data, short_window=20, long_window=50),

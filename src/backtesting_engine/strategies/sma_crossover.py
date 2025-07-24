@@ -20,6 +20,7 @@ taken.
 import numpy as np
 import pandas as pd
 
+from backtesting_engine.constants import CLOSE_COLUMN, LONG_MA_COLUMN, SHORT_MA_COLUMN, SIGNAL_COLUMN
 from backtesting_engine.strategies.exceptions import InvalidDataError
 from backtesting_engine.strategies.interfaces import IStrategy
 
@@ -38,7 +39,7 @@ class SMACrossoverStrategy(IStrategy):
         if self.data.empty:
             raise InvalidDataError("Data cannot be empty.")
 
-        if "Close" not in self.data.columns:
+        if CLOSE_COLUMN not in self.data.columns:
             raise InvalidDataError(
                 "Data must contain a 'Close' column for SMA calculations."
             )
@@ -51,13 +52,13 @@ class SMACrossoverStrategy(IStrategy):
     def generate_signals(self) -> pd.DataFrame:
         df = self.data.copy()
 
-        df["Short_MA"] = df["Close"].rolling(window=self.short_window).mean()
-        df["Long_MA"] = df["Close"].rolling(window=self.long_window).mean()
+        df[SHORT_MA_COLUMN] = df[CLOSE_COLUMN].rolling(window=self.short_window).mean()
+        df[LONG_MA_COLUMN] = df[CLOSE_COLUMN].rolling(window=self.long_window).mean()
 
-        df["Signal"] = 0
-        df["Signal"] = np.where(df["Short_MA"] > df["Long_MA"], 1, 0)
-        df["Signal"] = np.where(df["Short_MA"] < df["Long_MA"], -1, df["Signal"])
+        df[SIGNAL_COLUMN] = 0
+        df[SIGNAL_COLUMN] = np.where(df[SHORT_MA_COLUMN] > df[LONG_MA_COLUMN], 1, 0)
+        df[SIGNAL_COLUMN] = np.where(df[SHORT_MA_COLUMN] < df[LONG_MA_COLUMN], -1, df[SIGNAL_COLUMN])
 
-        df["Signal"] = df["Signal"].shift(1)
+        df[SIGNAL_COLUMN] = df[SIGNAL_COLUMN].shift(1)
 
         return df

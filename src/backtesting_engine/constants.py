@@ -1,0 +1,15 @@
+
+
+
+CLOSE_COLUMN = "Close"
+SIGNAL_COLUMN = "Signal"
+SHORT_MA_COLUMN = "Short_MA"
+LONG_MA_COLUMN = "Long_MA"
+CASH_COLUMN = "Cash"
+POSITION_COLUMN = "Position"
+HOLDINGS_COLUMN = "Holdings"
+TOTAL_VALUE_COLUMN = "Total_Value"
+
+BUY = "BUY"
+SELL = "SELL"
+HOLD = "HOLD"

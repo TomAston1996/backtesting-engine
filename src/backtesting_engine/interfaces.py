@@ -14,3 +14,12 @@ class EngineContext:
     portfolio: dict[str, float]
     slippage: float = 0.0
     commission: float = 0.0
+
+@dataclass
+class TradeLogEntry:
+    timestamp: pd.Timestamp
+    ticker: str
+    action: str
+    shares: int
+    price: float
+
