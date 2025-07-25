@@ -23,3 +23,19 @@ class TradeLogEntry:
     shares: int
     price: float
 
+
+@dataclass
+class BacktestMetrics:
+    total_return: float
+    sharpe_ratio: float
+    max_drawdown: float
+    volatility: float
+
+    def to_dict(self) -> dict[str, float]:
+        return {
+            "Total Return": self.total_return,
+            "Sharpe Ratio": self.sharpe_ratio,
+            "Max Drawdown": self.max_drawdown,
+            "Volatility": self.volatility
+        }
+

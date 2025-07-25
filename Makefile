@@ -10,7 +10,7 @@ format: install
 	uv run ruff check . --fix
 
 test: install
-	uv run pytest --cov --cov-report=term-missing -vv
+	uv run pytest --cov=src/backtesting_engine --cov-report=term-missing -vv
 
 audit: install
 	uv export --format requirements-txt > requirements.txt \
