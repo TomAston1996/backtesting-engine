@@ -5,6 +5,7 @@ various backtesting metrics for a portfolio, such as total return, Sharpe ratio,
 
 import pandas as pd
 
+from backtesting_engine.constants import TOTAL_VALUE_COLUMN
 from backtesting_engine.interfaces import BacktestMetrics, IMetricsCreator
 
 
@@ -20,7 +21,8 @@ class BacktestMetricCreator(IMetricsCreator):
     RISK_FREE_RATE: float = 0.0  # Default risk-free rate for Sharpe ratio calculation
 
     def __init__(self, backtest_results_df: pd.DataFrame, ticker: str) -> None:
-        self.portfolio_value = backtest_results_df[("Portfolio Value", ticker)]
+        self.ticker = ticker
+        self.portfolio_value = backtest_results_df[TOTAL_VALUE_COLUMN].copy()
 
     def get_total_return(self) -> float:
         """
@@ -74,6 +76,7 @@ class BacktestMetricCreator(IMetricsCreator):
         Get a BacktestMetrics data object containing total return, Sharpe ratio, and max drawdown.
         """
         return BacktestMetrics(
+            ticker=self.ticker,
             total_return=self.get_total_return(),
             sharpe_ratio=self.get_sharpe_ratio(),
             max_drawdown=self.get_max_drawdown(),

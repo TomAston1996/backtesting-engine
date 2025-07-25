@@ -22,15 +22,14 @@ from backtesting_engine.interfaces import EngineConfig, EngineContext, IMetricsC
 class BTXEngine:
     """
     BTXEngine is the core backtesting engine that executes trading strategies. It processes
-    the strategy signals and updates the portfolio accordingly. It can handle multiple tickers
-    and maintains a trade log for all executed trades.
+    the strategy signals and updates the portfolio accordingly.
     """
 
     def __init__(self, config: EngineConfig, context: EngineContext) -> None:
         # inject dependencies
         self.strategy = context.strategy
         self.data = context.data.copy()
-        self.portfolio = context.portfolio.copy()
+        self.ticker = context.ticker
 
         # metrics creator should be called after the backtest is run
         # to ensure it has the complete backtest results DataFrame
@@ -48,12 +47,14 @@ class BTXEngine:
         Run main backtest loop.
         """
         df = self.strategy.generate_signals()
+        df = self._backtest_single_ticker(df, self.ticker)
 
-        for ticker in self.portfolio.keys():
-            df = self._backtest_single_ticker(df, ticker)
+        metrics_creator = self.metrics_creator(df, self.ticker)
+        performance_metrics = metrics_creator.get_backtest_metrics()
+
+        performance_metrics.pretty_print()
 
         self.data = df
-        print(self.data.head())  # Display the first few rows of the backtested data
         return df
 
     def _backtest_single_ticker(self, df: pd.DataFrame, ticker: str) -> pd.DataFrame:
@@ -62,21 +63,23 @@ class BTXEngine:
 
         This method updates the DataFrame with trading signals and portfolio values.
         """
-        price_col = (CLOSE_COLUMN, ticker)
-        signal_col = (SIGNAL_COLUMN, ticker)
-
         # Initialize portfolio columns
-        df[(CASH_COLUMN, ticker)] = float(self.initial_cash)
-        df[(POSITION_COLUMN, ticker)] = 0
-        df[(HOLDINGS_COLUMN, ticker)] = 0.0
-        df[(TOTAL_VALUE_COLUMN, ticker)] = 0.0
+        df[CASH_COLUMN] = float(self.initial_cash)
+        df[POSITION_COLUMN] = 0
+        df[HOLDINGS_COLUMN] = 0.0
+        df[TOTAL_VALUE_COLUMN] = 0.0
+
+        df.at[df.index[0], POSITION_COLUMN] = 0
+        df.at[df.index[0], CASH_COLUMN] = float(self.initial_cash)
+        df.at[df.index[0], HOLDINGS_COLUMN] = 0.0
+        df.at[df.index[0], TOTAL_VALUE_COLUMN] = float(self.initial_cash)  # all cash on day 0
 
         position = 0
         cash = self.initial_cash
 
         for i in range(1, len(df)):
-            price = df.iloc[i][price_col]
-            signal = df.iloc[i][signal_col]
+            price = df.at[df.index[i], CLOSE_COLUMN]
+            signal = df.at[df.index[i], SIGNAL_COLUMN]
 
             if pd.isna(signal) or pd.isna(price):
                 continue
@@ -145,7 +148,7 @@ class BTXEngine:
         """
         Updates the portfolio values in the DataFrame.
         """
-        df.iat[idx, df.columns.get_loc((POSITION_COLUMN, ticker))] = position
-        df.iat[idx, df.columns.get_loc((CASH_COLUMN, ticker))] = cash
-        df.iat[idx, df.columns.get_loc((HOLDINGS_COLUMN, ticker))] = position * price
-        df.iat[idx, df.columns.get_loc((TOTAL_VALUE_COLUMN, ticker))] = cash + (position * price)
+        df.iat[idx, df.columns.get_loc(POSITION_COLUMN)] = position
+        df.iat[idx, df.columns.get_loc(CASH_COLUMN)] = cash
+        df.iat[idx, df.columns.get_loc(HOLDINGS_COLUMN)] = position * price
+        df.iat[idx, df.columns.get_loc(TOTAL_VALUE_COLUMN)] = cash + (position * price)

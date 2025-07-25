@@ -27,7 +27,7 @@ if __name__ == "__main__":
         ),
         context=EngineContext(
             data=data,
-            portfolio={},
+            ticker=TICKER,
             strategy=SMACrossoverStrategy(data=data, short_window=20, long_window=50),
             metrics_creator=BacktestMetricCreator
         ),
