@@ -5,10 +5,10 @@ various backtesting metrics for a portfolio, such as total return, Sharpe ratio,
 
 import pandas as pd
 
-from backtesting_engine.interfaces import BacktestMetrics
+from backtesting_engine.interfaces import BacktestMetrics, IMetricsCreator
 
 
-class BacktestMetricCreator:
+class BacktestMetricCreator(IMetricsCreator):
     """Class to calculate various backtesting metrics for a portfolio.
 
     This class provides methods to calculate total return, Sharpe ratio, and

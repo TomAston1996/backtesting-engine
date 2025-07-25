@@ -1,6 +1,14 @@
+'''
+Main entry point for the backtesting engine.
+
+This script initializes the backtesting engine with a sample strategy and runs the backtest for
+test purposes.
+'''
+
 from backtesting_engine.data.data_loader import load_data
 from backtesting_engine.engine import BTXEngine
-from backtesting_engine.interfaces import EngineContext
+from backtesting_engine.interfaces import EngineConfig, EngineContext
+from backtesting_engine.metrics import BacktestMetricCreator
 from backtesting_engine.strategies.sma_crossover import SMACrossoverStrategy
 
 
@@ -12,13 +20,16 @@ if __name__ == "__main__":
     data = load_data(TICKER, START_DATE, END_DATE)
 
     engine = BTXEngine(
-        strategy=SMACrossoverStrategy(data=data, short_window=20, long_window=50),
+        config=EngineConfig(
+            initial_cash=100000.0,
+            slippage=0.01,
+            commission=0.001
+        ),
         context=EngineContext(
             data=data,
-            initial_cash=100000.0,
             portfolio={},
-            slippage=0.01,
-            commission=0.001,
+            strategy=SMACrossoverStrategy(data=data, short_window=20, long_window=50),
+            metrics_creator=BacktestMetricCreator
         ),
     )
 

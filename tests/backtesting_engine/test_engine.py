@@ -12,7 +12,7 @@ from backtesting_engine.constants import (
     TOTAL_VALUE_COLUMN,
 )
 from backtesting_engine.engine import BTXEngine
-from backtesting_engine.interfaces import EngineContext
+from backtesting_engine.interfaces import BacktestMetrics, EngineConfig, EngineContext, IMetricsCreator
 from backtesting_engine.strategies.interfaces import IStrategy
 
 
@@ -26,6 +26,27 @@ class MockStrategy(IStrategy):
     def generate_signals(self) -> pd.DataFrame:
         # Return the data with signals already set
         return self.data
+
+
+class MockMetricsCreator(IMetricsCreator):
+    def __init__(self, backtest_results_df: pd.DataFrame, ticker: str) -> None:
+        self.backtest_results_df = backtest_results_df
+        self.ticker = ticker
+
+    def get_total_return(self) -> float:
+        pass
+
+    def get_sharpe_ratio(self) -> float:
+        pass
+
+    def get_max_drawdown(self) -> float:
+        pass
+
+    def get_volatility(self) -> float:
+        pass
+
+    def get_backtest_metrics(self) -> type[BacktestMetrics]:
+        pass
 
 
 @pytest.fixture
@@ -49,16 +70,27 @@ def sample_data() -> pd.DataFrame:
 
 
 @pytest.fixture
-def context(sample_data) -> EngineContext:
-    return EngineContext(data=sample_data, initial_cash=10_000, portfolio={"TEST": 0}, slippage=0.001, commission=0.001)
+def context(sample_data: pd.DataFrame) -> EngineContext:
+    return EngineContext(
+        data=sample_data,
+        portfolio={"TEST": 0},
+        strategy=MockStrategy(sample_data),
+        metrics_creator=MockMetricsCreator(sample_data, "TEST"),
+    )
 
 
-def test_trades_executed_when_buy_and_sell_signals_are_present(
-    context: EngineContext, sample_data: pd.DataFrame
-) -> None:
+@pytest.fixture
+def config() -> EngineConfig:
+    return EngineConfig(
+        initial_cash=100000.0,
+        slippage=0.01,
+        commission=0.001,
+    )
+
+
+def test_trades_executed_when_buy_and_sell_signals_are_present(config: EngineConfig, context: EngineContext) -> None:
     # Arrange
-    strategy = MockStrategy(sample_data)
-    engine = BTXEngine(strategy, context)
+    engine = BTXEngine(config, context)
 
     # Act
     _ = engine.run_backtest()
@@ -70,10 +102,9 @@ def test_trades_executed_when_buy_and_sell_signals_are_present(
     assert trades[1].action == SELL
 
 
-def test_final_position_is_zero_after_sell(context: EngineContext, sample_data: pd.DataFrame) -> None:
+def test_final_position_is_zero_after_sell(config: EngineConfig, context: EngineContext) -> None:
     # Arrange
-    strategy = MockStrategy(sample_data)
-    engine = BTXEngine(strategy, context)
+    engine = BTXEngine(config, context)
 
     # Act
     df = engine.run_backtest()
@@ -83,23 +114,21 @@ def test_final_position_is_zero_after_sell(context: EngineContext, sample_data: 
     assert final_position == 0
 
 
-def test_cash_after_sell_is_greater_than_initial(context: EngineContext, sample_data: pd.DataFrame) -> None:
+def test_cash_after_sell_is_greater_than_initial(config: EngineConfig, context: EngineContext) -> None:
     # Arrange
-    strategy = MockStrategy(sample_data)
-    engine = BTXEngine(strategy, context)
+    engine = BTXEngine(config, context)
 
     # Act
     df = engine.run_backtest()
 
     # Assert
     final_cash = df[(CASH_COLUMN, "TEST")].iloc[-1]
-    assert final_cash > context.initial_cash * 0.99  # account for slippage/commission
+    assert final_cash > config.initial_cash * 0.99  # account for slippage/commission
 
 
-def test_holdings_should_be_zero_after_sell(context: EngineContext, sample_data: pd.DataFrame) -> None:
+def test_holdings_should_be_zero_after_sell(config: EngineConfig, context: EngineContext) -> None:
     # Arrange
-    strategy = MockStrategy(sample_data)
-    engine = BTXEngine(strategy, context)
+    engine = BTXEngine(config, context)
 
     # Act
     df = engine.run_backtest()
@@ -109,10 +138,9 @@ def test_holdings_should_be_zero_after_sell(context: EngineContext, sample_data:
     assert final_holdings == 0.0
 
 
-def test_portfolio_columns_exist(context: EngineContext, sample_data: pd.DataFrame) -> None:
+def test_portfolio_columns_exist(config: EngineConfig, context: EngineContext) -> None:
     # Arrange
-    strategy = MockStrategy(sample_data)
-    engine = BTXEngine(strategy, context)
+    engine = BTXEngine(config, context)
 
     # Act
     df = engine.run_backtest()
@@ -122,17 +150,22 @@ def test_portfolio_columns_exist(context: EngineContext, sample_data: pd.DataFra
         assert (col, "TEST") in df.columns
 
 
-def test_no_trade_when_no_signal(context: EngineContext, sample_data: pd.DataFrame) -> None:
+def test_no_trade_when_no_signal(config: EngineConfig, sample_data: pd.DataFrame) -> None:
     # Arrange
     no_signal_data = sample_data.copy()
     no_signal_data[(SIGNAL_COLUMN, "TEST")] = 0
 
-    strategy = MockStrategy(no_signal_data)
-    engine = BTXEngine(strategy, context)
+    context = EngineContext(
+        data=no_signal_data,
+        portfolio={"TEST": 0},
+        strategy=MockStrategy(no_signal_data),
+        metrics_creator=MockMetricsCreator(no_signal_data, "TEST"),
+    )
+    engine = BTXEngine(config, context)
 
     # Act
     df = engine.run_backtest()
 
     assert len(engine.trade_log) == 0
     assert all(df[(POSITION_COLUMN, "TEST")] == 0)
-    assert all(df[(CASH_COLUMN, "TEST")] == context.initial_cash)
+    assert all(df[(CASH_COLUMN, "TEST")] == config.initial_cash)
