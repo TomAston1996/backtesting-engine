@@ -17,6 +17,13 @@ A simple, extensible Python backtesting engine for evaluating trading strategies
 ![Plotly]
 
 
+## ToDo
+
+- Incorperate multiproccessing so that simualtions can run in parralel (imput JSON)
+- Add lightweight visualisation - plotly graphs
+- Add different ways to load data maybe a DataLoader class
+- Add caching to data loader class
+
 ## Background: What is Backtesting?
 
 **Backtesting** is the process of evaluating a trading strategy using historical price data to simulate how it would have performed in the past. It helps quantify the effectiveness, risk, and robustness of an strategy before deploying it with real capital.
