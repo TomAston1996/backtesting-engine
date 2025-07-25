@@ -62,13 +62,13 @@ class BacktestMetricCreator(IMetricsCreator):
         drawdown = (self.portfolio_value.copy() - cumulative_max) / cumulative_max
 
         return drawdown.min()
-    
+
     def get_volatility(self) -> float:
-        '''
+        """
         Calculate the annualized volatility of the portfolio returns.
 
         This is the standard deviation of daily returns, annualized.
-        '''
+        """
         return self._get_daily_return_series().std() * (self.PERIODS_PER_YEAR**0.5)
 
     def get_backtest_metrics(self) -> BacktestMetrics:
@@ -80,5 +80,5 @@ class BacktestMetricCreator(IMetricsCreator):
             total_return=self.get_total_return(),
             sharpe_ratio=self.get_sharpe_ratio(),
             max_drawdown=self.get_max_drawdown(),
-            volatility=self.get_volatility()
+            volatility=self.get_volatility(),
         )

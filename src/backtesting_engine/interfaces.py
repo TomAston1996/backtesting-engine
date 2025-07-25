@@ -26,7 +26,7 @@ class BacktestMetrics:
             "Max Drawdown": self.max_drawdown,
             "Volatility": self.volatility,
         }
-    
+
     def pretty_print(self) -> None:
         print(f"Ticker: {self.ticker}")
         print(f"Total Return: {self.total_return:.2%}")
@@ -69,7 +69,7 @@ class EngineContext:
     data: pd.DataFrame
     ticker: str
     strategy: IStrategy
-    metrics_creator: type[IMetricsCreator] 
+    metrics_creator: type[IMetricsCreator]
 
 
 @dataclass

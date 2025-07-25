@@ -1,5 +1,6 @@
 import pandas as pd
 
+from backtesting_engine.constants import TOTAL_VALUE_COLUMN
 from backtesting_engine.interfaces import BacktestMetrics
 from backtesting_engine.metrics import BacktestMetricCreator
 
@@ -8,7 +9,7 @@ FAKE_TICKER = "TEST"
 
 
 def generate_fake_portfolio_df() -> pd.DataFrame:
-    data = {("Portfolio Value", FAKE_TICKER): [100, 105, 102, 108, 110]}
+    data = {TOTAL_VALUE_COLUMN: [100, 105, 102, 108, 110]}
     idx = pd.date_range(start="2022-01-01", periods=5, freq="D")
     return pd.DataFrame(data, index=idx)
 
