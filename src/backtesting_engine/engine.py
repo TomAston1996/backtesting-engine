@@ -17,6 +17,7 @@ from backtesting_engine.constants import (
     TOTAL_VALUE_COLUMN,
 )
 from backtesting_engine.interfaces import EngineConfig, EngineContext, IMetricsCreator, TradeLogEntry
+from backtesting_engine.plotter import plot_backtest_results
 
 
 class BTXEngine:
@@ -53,6 +54,12 @@ class BTXEngine:
         performance_metrics = metrics_creator.get_backtest_metrics()
 
         performance_metrics.pretty_print()
+
+        plot_backtest_results(
+            portfolio_value=df[TOTAL_VALUE_COLUMN], 
+            data=df,
+            ticker=self.ticker
+        )
 
         self.data = df
         return df

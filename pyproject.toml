@@ -9,6 +9,10 @@ authors = [
 ]
 dependencies = [
     "yfinance>=0.2.65",
+    "pandas",
+    "numpy",
+    "plotly",
+    "matplotlib",
 ]
 
 [tool.uv]
