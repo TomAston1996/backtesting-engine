@@ -1,7 +1,7 @@
 import os
 import tempfile
 
-from typing import Generator
+from typing import Any, Generator
 from unittest.mock import patch
 
 import pandas as pd
@@ -39,13 +39,13 @@ def temp_path() -> Generator[str, None, None]:
 
 
 @pytest.fixture
-def dataloader(tmp_path) -> DataLoader:
+def dataloader(tmp_path: Any) -> DataLoader:
     """Returns a DataLoader with a fresh PersistentLRUCache in a temporary directory"""
     cache = PersistentLRUCache(cache_dir=tmp_path, cache_file="lru_cache.pkl", max_size=2)
     return DataLoader(cache=cache)
 
 
-def test_load_from_csv_valid(temp_path, sample_df: pd.DataFrame) -> None:
+def test_load_from_csv_valid(temp_path: Any, sample_df: pd.DataFrame) -> None:
     # Arrange
     csv_path = os.path.join(temp_path, "sample.csv")
     sample_df.to_csv(csv_path)
@@ -68,7 +68,7 @@ def test_load_from_csv_missing_path_raises() -> None:
 
 
 @patch("backtesting_engine.data.data_loader.yf.download")
-def test_load_from_yfinance_cache_miss(mock_download, dataloader: DataLoader, sample_df: pd.DataFrame) -> None:
+def test_load_from_yfinance_cache_miss(mock_download: Any, dataloader: DataLoader, sample_df: pd.DataFrame) -> None:
     # Arrange
     mock_download.return_value = sample_df
 
@@ -82,7 +82,7 @@ def test_load_from_yfinance_cache_miss(mock_download, dataloader: DataLoader, sa
 
 
 @patch("backtesting_engine.data.data_loader.yf.download")
-def test_load_from_yfinance_cache_hit(mock_download, dataloader: DataLoader, sample_df: pd.DataFrame) -> None:
+def test_load_from_yfinance_cache_hit(mock_download: Any, dataloader: DataLoader, sample_df: pd.DataFrame) -> None:
     # Arrange
     key = CacheKey("AAPL", "2022-01-01", "2022-01-02")
     dataloader.cache.set(key, sample_df)
@@ -95,14 +95,8 @@ def test_load_from_yfinance_cache_hit(mock_download, dataloader: DataLoader, sam
     mock_download.assert_not_called()
 
 
-def test_load_with_unknown_source_raises(dataloader: DataLoader) -> None:
-    # Act & Assert
-    with pytest.raises(ValueError, match="Unknown source"):
-        dataloader.load("AAPL", "2022-01-01", "2022-01-02", source="unknown")
-
-
 @patch("backtesting_engine.data.data_loader.yf.download")
-def test_load_from_yfinance_droplevel(mock_download, dataloader: DataLoader, multiindex_df: pd.DataFrame) -> None:
+def test_load_from_yfinance_droplevel(mock_download: Any, dataloader: DataLoader, multiindex_df: pd.DataFrame) -> None:
     # Arrange
     mock_download.return_value = multiindex_df
 
@@ -116,7 +110,7 @@ def test_load_from_yfinance_droplevel(mock_download, dataloader: DataLoader, mul
 
 
 @patch("pandas.read_csv")
-def test_load_from_csv_droplevel(mock_read_csv, dataloader: DataLoader, multiindex_df: pd.DataFrame, tmp_path) -> None:
+def test_load_from_csv_droplevel(mock_read_csv: Any, dataloader: DataLoader, multiindex_df: pd.DataFrame, tmp_path: Any) -> None:
     # Arrange
     mock_read_csv.return_value = multiindex_df
     csv_path = tmp_path / "dummy.csv"

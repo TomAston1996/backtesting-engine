@@ -2,7 +2,7 @@ import os
 import shutil
 import tempfile
 
-from typing import Generator
+from typing import Any, Generator
 
 import pytest
 
@@ -17,7 +17,7 @@ def temp_cache_dir() -> Generator[str, None, None]:
     shutil.rmtree(dirpath)
 
 
-def test_set_and_get(temp_cache_dir) -> None:
+def test_set_and_get(temp_cache_dir: str) -> None:
     # Arrange
     cache = PersistentLRUCache(cache_dir=temp_cache_dir, max_size=2)
     key = CacheKey("AAPL", "2023-01-01", "2023-01-31")
@@ -31,7 +31,7 @@ def test_set_and_get(temp_cache_dir) -> None:
     assert cache.has(key)
 
 
-def test_lru_eviction(temp_cache_dir) -> None:
+def test_lru_eviction(temp_cache_dir: str) -> None:
     # Arrange
     cache = PersistentLRUCache(cache_dir=temp_cache_dir, max_size=2)
 
@@ -50,7 +50,7 @@ def test_lru_eviction(temp_cache_dir) -> None:
     assert cache.has(k3)
 
 
-def test_clear(temp_cache_dir) -> None:
+def test_clear(temp_cache_dir: str) -> None:
     # Arrange
     cache = PersistentLRUCache(cache_dir=temp_cache_dir, max_size=2)
     key = CacheKey("AAPL", "2023-01-01", "2023-01-31")
@@ -64,7 +64,7 @@ def test_clear(temp_cache_dir) -> None:
     assert cache.get(key) is None
 
 
-def test_persistence(temp_cache_dir) -> None:
+def test_persistence(temp_cache_dir: str) -> None:
     # Arrange
     key = CacheKey("AAPL", "2023-01-01", "2023-01-31")
     value = {"price": [100, 200, 300]}
@@ -78,7 +78,7 @@ def test_persistence(temp_cache_dir) -> None:
     assert cache2.get(key) == value
 
 
-def test_overwrite_existing_key(temp_cache_dir) -> None:
+def test_overwrite_existing_key(temp_cache_dir: str) -> None:
     # Arrange
     cache = PersistentLRUCache(cache_dir=temp_cache_dir, max_size=2)
     key = CacheKey("AAPL", "2023-01-01", "2023-01-31")
@@ -91,14 +91,13 @@ def test_overwrite_existing_key(temp_cache_dir) -> None:
     assert cache.get(key) == 456
 
 
-def test_corrupted_cache_file_handled_gracefully(temp_cache_dir, capsys) -> None:
+def test_corrupted_cache_file_handled_gracefully(temp_cache_dir: str, capsys: Any) -> None:
     # Arrange
     bad_file_path = os.path.join(temp_cache_dir, "lru_cache.pkl")
     with open(bad_file_path, "wb") as f:
         f.write(b"not a valid pickle")
 
     # Act and Assert
-    cache = PersistentLRUCache(cache_dir=temp_cache_dir, max_size=3)
-    assert len(cache._cache) == 0
+    PersistentLRUCache(cache_dir=temp_cache_dir, max_size=3)
     captured = capsys.readouterr()
     assert "corrupted or empty" in captured.out

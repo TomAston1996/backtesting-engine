@@ -93,6 +93,21 @@ For MacOS/Linux systems:
 make run
 ```
 
+## Contributing
+
+### Adding Dependencies
+
+```bash
+uv add <package>
+uv sync
+```
+
+### Adding Dev Dependencies
+```bash
+uv add --dev <package>
+uv sync
+```
+
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/TomAston1996/backtesting-engine.svg?style=for-the-badge

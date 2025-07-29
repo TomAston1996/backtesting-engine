@@ -34,9 +34,6 @@ class SMACrossoverStrategy(IStrategy):
         self.validate_data()
 
     def validate_data(self) -> None:
-        if not isinstance(self.data, pd.DataFrame):
-            raise InvalidDataError("Data must be a pandas DataFrame.")
-
         if self.data.empty:
             raise InvalidDataError("Data cannot be empty.")
 

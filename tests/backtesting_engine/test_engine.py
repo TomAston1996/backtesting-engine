@@ -37,16 +37,16 @@ class MockMetricsCreator(IMetricsCreator):
         self.ticker = ticker
 
     def get_total_return(self) -> float:
-        pass
+        return 0.0  # Mocked value
 
     def get_sharpe_ratio(self) -> float:
-        pass
+        return 0.0  # Mocked value
 
     def get_max_drawdown(self) -> float:
-        pass
+        return 0.0  # Mocked value
 
     def get_volatility(self) -> float:
-        pass
+        return 0.0  # Mocked value
 
     def get_backtest_metrics(self) -> BacktestMetrics:
         return BacktestMetrics(

@@ -22,6 +22,7 @@ dev-dependencies = [
     "pytest-cov>=6.2.1",
     "ruff>=0.12.4",
     "invoke>=2.2.0",
+    "pyright>=1.1.403",
 ]
 
 [build-system]
@@ -30,3 +31,20 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/backtesting_engine"]
+
+[tool.pyright]
+pythonVersion = "3.11"
+exclude = [
+  "tests/",
+  "build/",
+  "dist/",
+  "venv/",
+]
+reportMissingTypeStubs = false
+reportMissingImports = true
+reportOptionalSubscript = false
+reportUnknownMemberType = false
+reportUnknownArgumentType = false
+reportUnknownVariableType = false
+root = "src"
+typeCheckingMode = "strict"

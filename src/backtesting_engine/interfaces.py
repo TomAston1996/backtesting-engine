@@ -18,7 +18,7 @@ class BacktestMetrics:
     max_drawdown: float
     volatility: float
 
-    def to_dict(self) -> dict[str, float]:
+    def to_dict(self) -> dict[str, str | float]:
         return {
             "Ticker": self.ticker,
             "Total Return": self.total_return,

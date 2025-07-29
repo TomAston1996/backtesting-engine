@@ -118,7 +118,7 @@ class BTXEngine:
         """
         Executes a buy action, updating the cash and position accordingly.
         """
-        shares_to_buy = cash // (price * (1 + self.slippage))
+        shares_to_buy = int(cash // (price * (1 + self.slippage)))
         cost = shares_to_buy * price * (1 + self.slippage + self.commission)
         if shares_to_buy > 0:
             cash -= cost

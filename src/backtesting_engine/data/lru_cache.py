@@ -10,18 +10,23 @@ Pickle is used as we are storing complex objects (like DataFrames) that need to 
 import os
 import pickle
 
-from collections import OrderedDict, namedtuple
-from typing import Any
+from collections import OrderedDict
+from typing import Any, NamedTuple
 
 from filelock import FileLock
 
 
-CacheKey = namedtuple("CacheKey", ["ticker", "start_date", "end_date"])
+class CacheKey(NamedTuple):
+    ticker: str
+    start_date: str
+    end_date: str
+
+    def __str__(self) -> str:
+        return f"{self.ticker}_{self.start_date}_{self.end_date}"
 
 
 class PersistentLRUCache:
-    """A simple LRU cache implementation that persists to disk using pickle.
-    """
+    """A simple LRU cache implementation that persists to disk using pickle."""
 
     def __init__(self, cache_dir: str = ".cache", cache_file: str = "lru_cache.pkl", max_size: int = 10) -> None:
         self.cache_dir = cache_dir

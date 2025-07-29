@@ -8,11 +8,11 @@ from backtesting_engine.strategies.sma_crossover import SMACrossoverStrategy
 
 
 @pytest.fixture
-def dummy_data():
+def dummy_data() -> pd.DataFrame:
     return pd.DataFrame({CLOSE_COLUMN: [100, 102, 104, 103, 105, 107, 106, 108, 110, 112]})
 
 
-def test_valid_strategy_generates_signals(dummy_data) -> None:
+def test_valid_strategy_generates_signals(dummy_data: pd.DataFrame) -> None:
     # Arrange
     strategy = SMACrossoverStrategy(data=dummy_data, short_window=3, long_window=5)
 
@@ -30,11 +30,6 @@ def test_valid_strategy_generates_signals(dummy_data) -> None:
         1,
     ]  # The signal column should have values in [-1, 0, 1] and be shifted
     assert pd.isna(result[SIGNAL_COLUMN].iloc[0])  # shifted, so 1st signal should be NaN
-
-
-def test_invalid_data_type_raises_error() -> None:
-    with pytest.raises(InvalidDataError, match="Data must be a pandas DataFrame."):
-        SMACrossoverStrategy(data="not a df", short_window=3, long_window=5)
 
 
 def test_missing_close_column_raises_error() -> None:

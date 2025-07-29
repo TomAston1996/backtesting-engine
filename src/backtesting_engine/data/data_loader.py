@@ -42,8 +42,6 @@ class DataLoader:
         if source == "yfinance":
             return self._load_from_yfinance(ticker, start_date, end_date)
 
-        raise ValueError(f"Unknown source '{source}'")
-
     def _load_from_yfinance(self, ticker: str, start_date: str, end_date: str) -> pd.DataFrame:
         cache_key = CacheKey(ticker, start_date, end_date)
 
@@ -55,8 +53,11 @@ class DataLoader:
         df = yf.download(ticker, start=start_date, end=end_date)
 
         # Ensure the DataFrame has a single level of columns as we only deal with single ticker data
-        if isinstance(df.columns, pd.MultiIndex):
+        if df is not None and isinstance(df.columns, pd.MultiIndex):
             df.columns = df.columns.droplevel(1)
+
+        if df is None:
+            raise ValueError(f"No data found for {ticker} from {start_date} to {end_date}")
 
         self.cache.set(cache_key, df)
         return df
