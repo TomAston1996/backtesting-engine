@@ -13,6 +13,7 @@ dependencies = [
     "numpy",
     "plotly",
     "matplotlib",
+    "filelock>=3.18.0",
 ]
 
 [tool.uv]
