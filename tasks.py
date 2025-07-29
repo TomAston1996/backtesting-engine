@@ -8,7 +8,8 @@ engine script. It uses the Invoke library to define and run tasks, making it eas
 import os
 import shutil
 
-from invoke import Context, task
+from invoke.context import Context
+from invoke.tasks import task
 
 
 @task
