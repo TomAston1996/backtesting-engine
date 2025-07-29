@@ -22,7 +22,7 @@ A simple, extensible Python backtesting engine for evaluating trading strategies
 - Incorperate multiproccessing so that simualtions can run in parralel (imput JSON)
 - Add lightweight visualisation - plotly graphs
 - Add different ways to load data maybe a DataLoader class i.e. via yfinance or CSV
-- Add caching to data loader class
+- Make caching thread safe for multiprocessing
 - Add more strategies
 
 
@@ -45,12 +45,52 @@ By simulating trades over time, backtesting allows quants and traders to:
 
 ## 📦 Getting Started
 
-```bash
-# install dependencies with uv
-make install
+This project uses [**uv**](https://docs.astral.sh/uv/getting-started/installation/) for dependency management and virtual environments. Please ensure `uv` is installed before proceeding.
 
-# run the strategy
-uv run python src/backtest_engine/main.py
+### 🔧 Installation
+
+Set up your virtual environment and install dependencies:
+
+
+💻 Windows, MacOS, or Linux
+
+```bash
+uv venv
+uv sync
+```
+
+Or, if you're on MacOS or Linux, you can use the `Makefile`:
+
+```bash
+make install
+```
+
+### ✅ Running Tests
+
+To execute unit and integration tests
+
+For Windows systems:
+```bash
+invoke test
+```
+
+For MacOS/Linux systems:
+```bash
+make test
+```
+
+### 🚀 Running the App Locally
+
+To run the app (`main.py`) locally
+
+For Windows systems:
+```bash
+invoke run
+```
+
+For MacOS/Linux systems:
+```bash
+make run
 ```
 
 <!-- MARKDOWN LINKS & IMAGES -->

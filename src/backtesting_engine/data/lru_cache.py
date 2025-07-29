@@ -1,3 +1,12 @@
+"""
+This module implements a simple LRU (Least Recently Used) cache that persists to disk. It allows for
+efficient caching of data, such as historical stock prices, to avoid repeated network requests
+and improve performance in our backtesting engine especially when running multiple simulations
+sequentially or in parallel.
+
+Pickle is used as we are storing complex objects (like DataFrames) that need to be serialized.
+"""
+
 import os
 import pickle
 
@@ -9,7 +18,10 @@ CacheKey = namedtuple("CacheKey", ["ticker", "start_date", "end_date"])
 
 
 class PersistentLRUCache:
-    """A simple LRU cache implementation that persists to disk using pickle."""
+    """A simple LRU cache implementation that persists to disk using pickle.
+
+    #TODO: this needs to be made thread-safe if used in a multi-threaded environment with FileLock
+    """
 
     def __init__(self, cache_dir: str = ".cache", cache_file: str = "lru_cache.pkl", max_size: int = 10) -> None:
         self.cache_dir = cache_dir
