@@ -22,7 +22,7 @@ class BacktestMetricCreator(IMetricsCreator):
 
     def __init__(self, backtest_results_df: pd.DataFrame, ticker: str) -> None:
         self.ticker = ticker
-        self.portfolio_value = backtest_results_df[TOTAL_VALUE_COLUMN].copy()
+        self.portfolio_value: pd.Series = backtest_results_df.loc[:, TOTAL_VALUE_COLUMN].copy()
 
     def get_total_return(self) -> float:
         """

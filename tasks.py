@@ -31,6 +31,7 @@ def format(c: Context) -> None:
 
     Run with: `invoke format`
     """
+    c.run("uv run pyright")
     c.run("uv run ruff check . --fix")
 
 

@@ -34,6 +34,10 @@ packages = ["src/backtesting_engine"]
 
 [tool.pyright]
 pythonVersion = "3.11"
+include = [
+  "src/backtesting_engine/**/*.py",
+  "tests/**/*.py"
+]
 exclude = [
   "tests/",
   "build/",

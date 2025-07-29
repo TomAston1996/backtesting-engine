@@ -2,7 +2,7 @@
 This module implements the backtesting engine for executing trading strategies.
 """
 
-from typing import Callable
+from typing import Callable, cast
 
 import pandas as pd
 
@@ -85,10 +85,10 @@ class BTXEngine:
                 continue
 
             if self._should_buy(signal, position):
-                position, cash = self._execute_buy(cash, position, price, ticker, df.index[i])
+                position, cash = self._execute_buy(cash, position, price, ticker, cast(pd.Timestamp, df.index[i]))
 
             elif self._should_sell(signal, position):
-                position, cash = self._execute_sell(cash, position, price, ticker, df.index[i])
+                position, cash = self._execute_sell(cash, position, price, ticker, cast(pd.Timestamp, df.index[i]))
 
             self._update_portfolio(df, i, ticker, position, cash, price)
 
