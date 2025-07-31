@@ -1,8 +1,8 @@
 import pandas as pd
 
+from backtesting_engine.analytics.metrics import BacktestMetricCreator
 from backtesting_engine.constants import TOTAL_VALUE_COLUMN
 from backtesting_engine.interfaces import BacktestMetrics
-from backtesting_engine.metrics import BacktestMetricCreator
 
 
 FAKE_TICKER = "TEST"

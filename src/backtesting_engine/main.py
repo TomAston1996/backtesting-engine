@@ -5,11 +5,11 @@ This script initializes the backtesting engine with a sample strategy and runs t
 test purposes.
 """
 
+from backtesting_engine.analytics.metrics import BacktestMetricCreator
 from backtesting_engine.data.data_loader import DataLoader
 from backtesting_engine.data.lru_cache import PersistentLRUCache
 from backtesting_engine.engine import BTXEngine
 from backtesting_engine.interfaces import EngineConfig, EngineContext
-from backtesting_engine.metrics import BacktestMetricCreator
 from backtesting_engine.strategies.sma_crossover import SMACrossoverStrategy
 
 

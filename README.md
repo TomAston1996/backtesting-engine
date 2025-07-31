@@ -21,6 +21,9 @@ A simple, extensible Python backtesting engine for evaluating trading strategies
 
 - Incorperate multiproccessing so that simualtions can run in parralel (imput JSON)
 - Add lightweight visualisation - plotly graphs
+    - Portfolio Value over Time vs raw value of stock with buy and sell positions
+    - Strategy Daily Returns
+    - Number of stocks held daily
 - Add more strategies
 - add hook
 
