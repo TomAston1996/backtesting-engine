@@ -26,14 +26,14 @@ def clean(c: Context) -> None:
 
 
 @task
-def format(c: Context) -> None:
+def lint(c: Context) -> None:
     """
     Format the code using ruff.
 
-    Run with: `invoke format`
+    Run with: `invoke lint`
     """
-    c.run("uv run pyright")
     c.run("uv run ruff check . --fix")
+    c.run("uv run pre-commit run -a")
 
 
 @task

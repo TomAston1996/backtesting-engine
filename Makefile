@@ -6,8 +6,9 @@ install:
 	uv venv
 	uv sync
 
-format: install
+lint: install
 	uv run ruff check . --fix
+	uv run pre-commit run -a
 
 test: install
 	uv run pytest --cov=src/backtesting_engine --cov-report=term-missing -vv

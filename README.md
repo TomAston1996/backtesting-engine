@@ -21,14 +21,14 @@ A simple, extensible Python backtesting engine for evaluating trading strategies
 
 - Incorperate multiproccessing so that simualtions can run in parralel (imput JSON)
 - Add lightweight visualisation - plotly graphs
-- Add different ways to load data maybe a DataLoader class i.e. via yfinance or CSV
-- Make caching thread safe for multiprocessing
 - Add more strategies
+- add hook
 
 
 ## Done
 
 - Persistance LRU cache created for more efficient data loading (perform performance tests on caching)
+- Add different ways to load data maybe a DataLoader class i.e. via yfinance or CSV
 
 
 

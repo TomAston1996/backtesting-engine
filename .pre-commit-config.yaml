@@ -1,0 +1,25 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.12.4  # Use the latest stable version from https://github.com/astral-sh/ruff-pre-commit/releases
+    hooks:
+      - id: ruff-check
+        args: [ --config=ruff.toml]
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: end-of-file-fixer # Ensures files end with a newline
+      - id: trailing-whitespace # Strips trailing spaces
+      - id: check-yaml # Validates YAML syntax
+        files: \.(yml|yaml)$
+        args: [--allow-multiple-documents]
+      - id: check-ast
+      - id: check-docstring-first
+      - id: check-executables-have-shebangs
+      - id: check-merge-conflict
+      - id: check-toml
+      - id: debug-statements
+      - id: name-tests-test
+        args: [--pytest-test-first]

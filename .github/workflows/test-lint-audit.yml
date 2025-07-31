@@ -26,16 +26,42 @@ jobs:
       - name: Run tests with Pytest
         run: uv run pytest --cov=src/backtesting_engine --cov-report=term-missing -vv
 
-  audit:
+  lint:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11"]
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python 3.11
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v1
+
+      - name: Install dependencies (including dev)
+        run: uv sync --dev
+
+      - name: Run pre-commit checks (Ruff, whitespace, YAML, etc.)
+        run: uv run pre-commit run --all-files
+
+  audit:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
 
       - name: Install uv
         uses: astral-sh/setup-uv@v1
@@ -50,4 +76,3 @@ jobs:
             grep -v "^-e " requirements.txt > filtered-requirements.txt
             uvx pip-audit -r filtered-requirements.txt --disable-pip --strict --fix
             rm requirements.txt filtered-requirements.txt
-
