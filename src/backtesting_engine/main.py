@@ -26,10 +26,10 @@ if __name__ == "__main__":
         config=EngineConfig(initial_cash=100_000.0, slippage=0.01, commission=0.001),
         context=EngineContext(
             sim_group="local_test",
-            sim_id="001",
+            sim_id="002",
             data=data,
             ticker=TICKER,
-            strategy=SMACrossoverStrategy(data=data, short_window=20, long_window=50),
+            strategy=SMACrossoverStrategy(data=data, short_window=50, long_window=100),
             metrics_creator=BacktestMetricCreator,
             plot_generator=PlotGenerator
         ),
