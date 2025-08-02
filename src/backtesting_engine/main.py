@@ -14,7 +14,10 @@ from backtesting_engine.interfaces import EngineConfig, EngineContext
 from backtesting_engine.strategies.sma_crossover import SMACrossoverStrategy
 
 
-if __name__ == "__main__":
+def main() -> None:
+    """
+    Main function to run the backtesting engine with a sample strategy.
+    """
     TICKER = "AAPL"
     START_DATE = "2020-01-01"
     END_DATE = "2023-01-01"
@@ -31,8 +34,12 @@ if __name__ == "__main__":
             ticker=TICKER,
             strategy=SMACrossoverStrategy(data=data, short_window=50, long_window=100),
             metrics_creator=BacktestMetricCreator,
-            plot_generator=PlotGenerator
+            plot_generator=PlotGenerator,
         ),
     )
 
     engine.run_backtest()
+
+
+if __name__ == "__main__":
+    main()
