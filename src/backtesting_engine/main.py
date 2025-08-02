@@ -6,6 +6,7 @@ test purposes.
 """
 
 from backtesting_engine.analytics.metrics import BacktestMetricCreator
+from backtesting_engine.analytics.plotter import PlotGenerator
 from backtesting_engine.data.data_loader import DataLoader
 from backtesting_engine.data.lru_cache import PersistentLRUCache
 from backtesting_engine.engine import BTXEngine
@@ -22,12 +23,15 @@ if __name__ == "__main__":
     data = data_loader.load(ticker=TICKER, start_date=START_DATE, end_date=END_DATE, source="yfinance")
 
     engine = BTXEngine(
-        config=EngineConfig(initial_cash=100000.0, slippage=0.01, commission=0.001),
+        config=EngineConfig(initial_cash=100_000.0, slippage=0.01, commission=0.001),
         context=EngineContext(
+            sim_group="local_test",
+            sim_id="001",
             data=data,
             ticker=TICKER,
             strategy=SMACrossoverStrategy(data=data, short_window=20, long_window=50),
             metrics_creator=BacktestMetricCreator,
+            plot_generator=PlotGenerator
         ),
     )
 

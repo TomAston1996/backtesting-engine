@@ -6,6 +6,7 @@ from typing import Callable, cast
 
 import pandas as pd
 
+from backtesting_engine.analytics.interfaces import IMetricsCreator, IPlotGenerator
 from backtesting_engine.constants import (
     BUY,
     CASH_COLUMN,
@@ -16,7 +17,7 @@ from backtesting_engine.constants import (
     SIGNAL_COLUMN,
     TOTAL_VALUE_COLUMN,
 )
-from backtesting_engine.interfaces import EngineConfig, EngineContext, IMetricsCreator, TradeLogEntry
+from backtesting_engine.interfaces import EngineConfig, EngineContext, TradeLogEntry
 
 
 class BTXEngine:
@@ -27,6 +28,7 @@ class BTXEngine:
 
     def __init__(self, config: EngineConfig, context: EngineContext) -> None:
         # inject dependencies
+        self.context = context
         self.strategy = context.strategy
         self.data = context.data.copy()
         self.ticker = context.ticker
@@ -34,8 +36,8 @@ class BTXEngine:
         # metrics creator should be called after the backtest is run
         # to ensure it has the complete backtest results DataFrame
         self.metrics_creator: Callable[[pd.DataFrame, str], IMetricsCreator] = context.metrics_creator
+        self.plot_generator: Callable[[pd.DataFrame, str, EngineContext], IPlotGenerator] = context.plot_generator
 
-        # config parameters
         self.initial_cash = config.initial_cash
         self.slippage = config.slippage
         self.commission = config.commission
@@ -48,13 +50,17 @@ class BTXEngine:
         """
         df = self.strategy.generate_signals()
         df = self._backtest_single_ticker(df, self.ticker)
+        self.data = df
 
+        # Calculate performance metrics after the backtest is complete
         metrics_creator = self.metrics_creator(df, self.ticker)
         performance_metrics = metrics_creator.get_backtest_metrics()
-
         performance_metrics.pretty_print()
 
-        self.data = df
+        # Generate plots for the backtest results
+        plot_generator = self.plot_generator(df, self.strategy.__class__.__name__, self.context)
+        plot_generator.generate()
+
         return df
 
     def _backtest_single_ticker(self, df: pd.DataFrame, ticker: str) -> pd.DataFrame:
@@ -63,12 +69,6 @@ class BTXEngine:
 
         This method updates the DataFrame with trading signals and portfolio values.
         """
-        # Initialize portfolio columns
-        df[CASH_COLUMN] = float(self.initial_cash)
-        df[POSITION_COLUMN] = 0
-        df[HOLDINGS_COLUMN] = 0.0
-        df[TOTAL_VALUE_COLUMN] = 0.0
-
         df.at[df.index[0], POSITION_COLUMN] = 0
         df.at[df.index[0], CASH_COLUMN] = float(self.initial_cash)
         df.at[df.index[0], HOLDINGS_COLUMN] = 0.0
@@ -79,10 +79,13 @@ class BTXEngine:
 
         for i in range(1, len(df)):
             price = df.at[df.index[i], CLOSE_COLUMN]
-            signal = df.at[df.index[i], SIGNAL_COLUMN]
-
-            if pd.isna(signal) or pd.isna(price):
+            if pd.isna(price):
                 continue
+
+            signal = df.at[df.index[i], SIGNAL_COLUMN]
+            if pd.isna(signal):
+                signal = 0.0
+                df.at[df.index[i], SIGNAL_COLUMN] = 0.0
 
             if self._should_buy(signal, position):
                 position, cash = self._execute_buy(cash, position, price, ticker, cast(pd.Timestamp, df.index[i]))
@@ -90,7 +93,7 @@ class BTXEngine:
             elif self._should_sell(signal, position):
                 position, cash = self._execute_sell(cash, position, price, ticker, cast(pd.Timestamp, df.index[i]))
 
-            self._update_portfolio(df, i, ticker, position, cash, price)
+            self._update_portfolio(df, i, position, cash, price)
 
         return df
 
@@ -118,10 +121,11 @@ class BTXEngine:
         """
         Executes a buy action, updating the cash and position accordingly.
         """
-        shares_to_buy = int(cash // (price * (1 + self.slippage)))
-        cost = shares_to_buy * price * (1 + self.slippage + self.commission)
+        per_share_cost  = price * (1 + self.slippage + self.commission)
+        shares_to_buy   = int(cash // per_share_cost)
+        total_trade_cost = shares_to_buy * per_share_cost
         if shares_to_buy > 0:
-            cash -= cost
+            cash -= total_trade_cost
             position += shares_to_buy
             self.trade_log.append(
                 TradeLogEntry(timestamp=timestamp, ticker=ticker, action=BUY, shares=shares_to_buy, price=price)
@@ -134,7 +138,7 @@ class BTXEngine:
         """
         Executes a sell action, updating the cash and position accordingly.
         """
-        proceeds = position * price * (1 - self.slippage - self.commission)
+        proceeds = position * price * (1 - self.commission)
         cash += proceeds
         self.trade_log.append(
             TradeLogEntry(timestamp=timestamp, ticker=ticker, action=SELL, shares=position, price=price)
@@ -143,7 +147,7 @@ class BTXEngine:
         return position, cash
 
     def _update_portfolio(
-        self, df: pd.DataFrame, idx: int, ticker: str, position: int, cash: float, price: float
+        self, df: pd.DataFrame, idx: int, position: int, cash: float, price: float
     ) -> None:
         """
         Updates the portfolio values in the DataFrame.

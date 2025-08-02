@@ -5,8 +5,8 @@ various backtesting metrics for a portfolio, such as total return, Sharpe ratio,
 
 import pandas as pd
 
+from backtesting_engine.analytics.interfaces import BacktestMetrics, IMetricsCreator
 from backtesting_engine.constants import TOTAL_VALUE_COLUMN
-from backtesting_engine.interfaces import BacktestMetrics, IMetricsCreator
 
 
 class BacktestMetricCreator(IMetricsCreator):

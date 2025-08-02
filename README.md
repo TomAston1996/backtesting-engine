@@ -46,6 +46,16 @@ By simulating trades over time, backtesting allows quants and traders to:
 - Test the impact of transaction costs and slippage
 - Avoid overfitting through walk-forward analysis or out-of-sample testing
 
+
+## Results
+
+```
+out/
+└── my_sim_group/
+    └── aapl_portfolio_vs_stock_value.png
+
+```
+
 ## 📦 Getting Started
 
 This project uses [**uv**](https://docs.astral.sh/uv/getting-started/installation/) for dependency management and virtual environments. Please ensure `uv` is installed before proceeding.
@@ -96,7 +106,7 @@ For MacOS/Linux systems:
 make run
 ```
 
-## Contributing
+## 👭🏻 Contributing
 
 ### Adding Dependencies
 

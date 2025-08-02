@@ -1,6 +1,8 @@
 import pandas as pd
 import pytest
 
+from backtesting_engine.analytics.interfaces import IMetricsCreator, IPlotGenerator
+from backtesting_engine.analytics.metrics import BacktestMetrics
 from backtesting_engine.constants import (
     BUY,
     CASH_COLUMN,
@@ -12,7 +14,7 @@ from backtesting_engine.constants import (
     TOTAL_VALUE_COLUMN,
 )
 from backtesting_engine.engine import BTXEngine
-from backtesting_engine.interfaces import BacktestMetrics, EngineConfig, EngineContext, IMetricsCreator
+from backtesting_engine.interfaces import EngineConfig, EngineContext
 from backtesting_engine.strategies.interfaces import IStrategy
 
 
@@ -57,6 +59,12 @@ class MockMetricsCreator(IMetricsCreator):
             volatility=9.9,
         )
 
+class MockPlotGenerator(IPlotGenerator):
+    def __init__(self, _: pd.DataFrame, __: str, ___: EngineContext) -> None:
+        pass
+
+    def generate(self) -> None:
+        pass
 
 @pytest.fixture
 def sample_data() -> pd.DataFrame:
@@ -74,10 +82,13 @@ def sample_data() -> pd.DataFrame:
 @pytest.fixture
 def context(sample_data: pd.DataFrame) -> EngineContext:
     return EngineContext(
+        sim_group="test_group",
+        sim_id="test_id",
         data=sample_data,
         ticker=TICKER,
         strategy=MockStrategy(sample_data),
         metrics_creator=MockMetricsCreator,
+        plot_generator=MockPlotGenerator
     )
 
 
@@ -158,10 +169,13 @@ def test_no_trade_when_no_signal(config: EngineConfig, sample_data: pd.DataFrame
     no_signal_data[SIGNAL_COLUMN] = 0
 
     context = EngineContext(
+        sim_group="test_no_signal",
+        sim_id="test_no_signal_id",
         data=no_signal_data,
         ticker=TICKER,
         strategy=MockStrategy(no_signal_data),
         metrics_creator=MockMetricsCreator,
+        plot_generator=MockPlotGenerator
     )
     engine = BTXEngine(config, context)
 

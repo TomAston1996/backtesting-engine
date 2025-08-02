@@ -4,6 +4,8 @@ omit =
     __init__.py
     */main.py
     */interfaces.py
+    */plotter.py
+    */constants.py
 
 
 [report]
