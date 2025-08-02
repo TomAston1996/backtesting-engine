@@ -9,6 +9,22 @@
 
 A simple, extensible Python backtesting engine for evaluating trading strategies on historical market data.
 
+##  📑 Table of Contents
+
+- [🧑‍💻 Tech Stack](#🧑‍💻-tech-stack)
+- [📖 Background: What is Backtesting?](#📖-background-what-is-backtesting)
+- [📝 Configuration File](#📝-configuration-file)
+- [📝 Results](#📝-results-and-screenhots)
+- [📦 Getting Started](#📦-getting-started)
+  - [🔧 Installation](#🔧-installation)
+  - [✅ Running Tests](#✅-running-tests)
+  - [🚀 Running the App Locally](#🚀-running-the-app-locally)
+- [👭🏻 Contributing](#👭🏻-contributing)
+  - [Adding Dependencies](#adding-dependencies)
+  - [Adding Dev Dependencies](#adding-dev-dependencies)
+- [📬 Contact](#contact)
+
+
 ## 🧑‍💻 Tech Stack
 
 ![Python]
@@ -17,25 +33,7 @@ A simple, extensible Python backtesting engine for evaluating trading strategies
 ![Plotly]
 
 
-## ToDo
-
-- Incorperate multiproccessing so that simualtions can run in parralel (imput JSON)
-- Add lightweight visualisation - plotly graphs
-    - Portfolio Value over Time vs raw value of stock with buy and sell positions
-    - Strategy Daily Returns
-    - Number of stocks held daily
-- Add more strategies
-- add hook
-
-
-## Done
-
-- Persistance LRU cache created for more efficient data loading (perform performance tests on caching)
-- Add different ways to load data maybe a DataLoader class i.e. via yfinance or CSV
-
-
-
-## Background: What is Backtesting?
+## 📖 Background: What is Backtesting?
 
 **Backtesting** is the process of evaluating a trading strategy using historical price data to simulate how it would have performed in the past. It helps quantify the effectiveness, risk, and robustness of an strategy before deploying it with real capital.
 
@@ -47,14 +45,94 @@ By simulating trades over time, backtesting allows quants and traders to:
 - Avoid overfitting through walk-forward analysis or out-of-sample testing
 
 
-## Results
+## 📝 Configuration File
 
+A **JSON** config file is the only imput required for the backtesting engine. It defines a batch of simulations under a `simGroup`, with global settings like `outputDirLocation` and `author`. Each simulation in the sims array includes a unique `simId`, a `strategy` with its parameters, data source details (e.g. ticker, date range), and a `simConfig` block for initial cash, slippage, and commission. This structure allows easy setup and parallel execution of multiple strategy runs via multiprocessing.
+
+Simulations are defined in a single **JSON** file with the following structure:
+
+```json
+{
+    "simGroup": "example_sim_group",
+    "outputDirLocation": "./out",
+    "author": "Tom Aston",
+    "sims": [
+        {
+            "simId": "001",
+            "strategy": {
+                "type": "SMACrossover",
+                "fields": {
+                    "shortWindow": 50,
+                    "longWindow": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "startDate": "2020-01-02",
+                "endDate": "2023-01-01",
+            },
+            "simConfig": {
+                "initialCash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            }
+        },
+        {
+            "simId": "002",
+            "strategy": {
+                "type": "BuyAndHold",
+            },
+            "data": {...},
+            "simConfig": {...}
+        }
+    ]
+}
 ```
+
+## 📝 Results & Screenshots
+
+The simulation results are organized by `simGroup` and `ticker` symbol. Inside each ticker folder, you’ll find all relevant files for each simulation named using the format `<simId>_<strategy>_<artifact>`.
+
+Each simulation produces the following outputs:
+
+- `strategy_vs_buy_and_hold` plot comparing strategy performance against buy-and-hold
+- `daily_returns` plot showing daily portfolio returns
+- `drawdown` plot highlighting peak-to-trough losses
+- `performance_metrics.txt` summarizing key performance statistics
+- `result.csv` containing detailed time series data of portfolio value and positions
+
+
+```txt
 out/
 └── my_sim_group/
-    └── aapl_portfolio_vs_stock_value.png
-
+    ├── AAPL/
+    │   ├── 001_SMACrossover_strategy_vs_buy_and_hold.png
+    │   ├── 001_SMACrossover_daily_returns.png
+    │   ├── 001_SMACrossover_drawdown.png
+    │   ├── 001_SMACrossover_performance_metrics.txt
+    │   ├── 001_SMACrossover_result.csv
+    │   ├── 002_BuyAndHold_strategy_vs_buy_and_hold.png
+    │   ├── 002_BuyAndHold_daily_returns.png
+    │   ├── 002_BuyAndHold_drawdown.png
+    │   ├── 002_BuyAndHold_performance_metrics.txt
+    │   └── 002_BuyAndHold_result.csv
+    └── MSFT/
+        ├── 003_SMACrossover_strategy_vs_buy_and_hold.png
+        ├── 003_SMACrossover_daily_returns.png
+        ├── 003_SMACrossover_drawdown.png
+        ├── 003_SMACrossover_performance_metrics.txt
+        ├── 003_SMACrossover_result.csv
+        ├── 004_BuyAndHold_strategy_vs_buy_and_hold.png
+        ├── 004_BuyAndHold_daily_returns.png
+        ├── 004_BuyAndHold_drawdown.png
+        ├── 004_BuyAndHold_performance_metrics.txt
+        └── 004_BuyAndHold_result.csv
 ```
+
+**Screenshots** from the output plots can be seen below:
+
+![Example backtester plots](docs/readme/backtester_plots.png)
 
 ## 📦 Getting Started
 
