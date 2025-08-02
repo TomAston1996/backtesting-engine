@@ -9,12 +9,16 @@
 
 A simple, extensible Python backtesting engine for evaluating trading strategies on historical market data.
 
+**Screenshots** from the output can be seen below:
+
+![Example backtester plots](docs/readme/backtester_plots.png)
+
 ##  📑 Table of Contents
 
 - [🧑‍💻 Tech Stack](#🧑‍💻-tech-stack)
 - [📖 Background: What is Backtesting?](#📖-background-what-is-backtesting)
 - [📝 Configuration File](#📝-configuration-file)
-- [📝 Results](#📝-results-and-screenhots)
+- [📝 Results](#📝-results)
 - [📦 Getting Started](#📦-getting-started)
   - [🔧 Installation](#🔧-installation)
   - [✅ Running Tests](#✅-running-tests)
@@ -90,7 +94,7 @@ Simulations are defined in a single **JSON** file with the following structure:
 }
 ```
 
-## 📝 Results & Screenshots
+## 📝 Results
 
 The simulation results are organized by `simGroup` and `ticker` symbol. Inside each ticker folder, you’ll find all relevant files for each simulation named using the format `<simId>_<strategy>_<artifact>`.
 
@@ -129,10 +133,6 @@ out/
         ├── 004_BuyAndHold_performance_metrics.txt
         └── 004_BuyAndHold_result.csv
 ```
-
-**Screenshots** from the output plots can be seen below:
-
-![Example backtester plots](docs/readme/backtester_plots.png)
 
 ## 📦 Getting Started
 
