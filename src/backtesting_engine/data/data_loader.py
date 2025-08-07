@@ -8,11 +8,13 @@ from typing import Literal, Optional
 import pandas as pd
 import yfinance as yf
 
-from backtesting_engine.data.interfaces import ILocalCache
+from backtesting_engine.constants import CLOSE_COLUMN
+from backtesting_engine.data.interfaces import IDataLoader, ILocalCache
 from backtesting_engine.data.lru_cache import CacheKey, PersistentLRUCache
+from backtesting_engine.exceptions import InvalidDataError
 
 
-class DataLoader:
+class DataLoader(IDataLoader):
     """
     DataLoader is responsible for loading historical stock data from various sources.
 
@@ -38,10 +40,31 @@ class DataLoader:
         if source == "csv":
             if not csv_path:
                 raise ValueError("csv_path must be provided when source='csv'")
-            return self._load_from_csv(csv_path)
+            df = self._load_from_csv(csv_path)
+        else:
+            df = self._load_from_yfinance(ticker, start_date, end_date)
 
-        if source == "yfinance":
-            return self._load_from_yfinance(ticker, start_date, end_date)
+        self.validate_data(df)
+
+        return df
+
+    def validate_data(self, df: pd.DataFrame) -> None:
+        """Validate the loaded data to ensure it meets the expected format."""
+        if df.empty:
+            raise InvalidDataError("Loaded DataFrame is empty.")
+
+        if not isinstance(df.index, pd.DatetimeIndex):
+            raise InvalidDataError("DataFrame index must be a DatetimeIndex.")
+
+        if CLOSE_COLUMN not in df.columns:
+            raise InvalidDataError(
+                "Data must contain a 'Close' column for SMA calculations."
+            )
+
+        if df[CLOSE_COLUMN].isnull().any():
+            raise InvalidDataError(
+                "Data contains NaN values in the 'Close' column, which is not allowed."
+            )
 
     def _load_from_yfinance(self, ticker: str, start_date: str, end_date: str) -> pd.DataFrame:
         cache_key = CacheKey(ticker, start_date, end_date)

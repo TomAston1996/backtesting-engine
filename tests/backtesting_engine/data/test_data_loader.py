@@ -1,4 +1,5 @@
 import os
+import re
 import tempfile
 
 from typing import Any, Generator
@@ -9,6 +10,7 @@ import pytest
 
 from backtesting_engine.data.data_loader import DataLoader
 from backtesting_engine.data.lru_cache import CacheKey, PersistentLRUCache
+from backtesting_engine.exceptions import InvalidDataError
 
 
 @pytest.fixture
@@ -21,6 +23,24 @@ def sample_df() -> pd.DataFrame:
         },
         index=pd.to_datetime(["2022-01-01", "2022-01-02"]),
     )
+
+
+@pytest.mark.parametrize(
+    "df, expected_error",
+    [
+        (pd.DataFrame(), "empty"),
+        (pd.DataFrame({"Close": [100]}, index=[0]), "DatetimeIndex"),
+        (pd.DataFrame({"Open": [100]}, index=pd.to_datetime(["2022-01-01"])), "Close"),
+        (pd.DataFrame({"Close": [None]}, index=pd.to_datetime(["2022-01-01"])), "NaN"),
+    ],
+)
+def test_validate_data_invalid_cases_raise(df: pd.DataFrame, expected_error: str) -> None:
+    # Arrange
+    loader = DataLoader()
+
+    # Act & Assert
+    with pytest.raises(InvalidDataError, match=re.escape(expected_error)):
+        loader.validate_data(df)
 
 
 @pytest.fixture
@@ -110,7 +130,9 @@ def test_load_from_yfinance_droplevel(mock_download: Any, dataloader: DataLoader
 
 
 @patch("pandas.read_csv")
-def test_load_from_csv_droplevel(mock_read_csv: Any, dataloader: DataLoader, multiindex_df: pd.DataFrame, tmp_path: Any) -> None:
+def test_load_from_csv_droplevel(
+    mock_read_csv: Any, dataloader: DataLoader, multiindex_df: pd.DataFrame, tmp_path: Any
+) -> None:
     # Arrange
     mock_read_csv.return_value = multiindex_df
     csv_path = tmp_path / "dummy.csv"

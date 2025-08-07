@@ -2,8 +2,8 @@ import pandas as pd
 import pytest
 
 from backtesting_engine.constants import CLOSE_COLUMN, SIGNAL_COLUMN
+from backtesting_engine.exceptions import InvalidDataError
 from backtesting_engine.strategies.constants import LONG_MA_COLUMN, SHORT_MA_COLUMN
-from backtesting_engine.strategies.exceptions import InvalidDataError
 from backtesting_engine.strategies.sma_crossover import SMACrossoverStrategy
 
 
@@ -30,18 +30,6 @@ def test_valid_strategy_generates_signals(dummy_data: pd.DataFrame) -> None:
         1,
     ]  # The signal column should have values in [-1, 0, 1] and be shifted
     assert pd.isna(result[SIGNAL_COLUMN].iloc[0])  # shifted, so 1st signal should be NaN
-
-
-def test_missing_close_column_raises_error() -> None:
-    df = pd.DataFrame({"Open": [1, 2, 3]})
-    with pytest.raises(InvalidDataError, match="must contain a 'Close' column"):
-        SMACrossoverStrategy(data=df, short_window=3, long_window=5)
-
-
-def test_empty_dataframe_raises_error() -> None:
-    df = pd.DataFrame(columns=["Close"])
-    with pytest.raises(InvalidDataError, match="cannot be empty"):
-        SMACrossoverStrategy(data=df, short_window=3, long_window=5)
 
 
 def test_too_short_data_raises_error() -> None:

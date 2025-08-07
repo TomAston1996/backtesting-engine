@@ -5,6 +5,8 @@ This module defines the interfaces used within the backtesting engine's data lay
 from abc import ABC, abstractmethod
 from typing import Any
 
+import pandas as pd
+
 
 class ILocalCache(ABC):
     @abstractmethod
@@ -26,3 +28,11 @@ class ILocalCache(ABC):
     def has(self, key: Any) -> bool:
         """Check if an item exists in the cache."""
         pass
+
+
+class IDataLoader (ABC):
+    @abstractmethod
+    def load(self, *args: Any, **kwargs: Any) -> pd.DataFrame:...
+
+    @abstractmethod
+    def validate_data(self, df: pd.DataFrame) -> None:...

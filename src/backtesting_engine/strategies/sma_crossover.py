@@ -21,8 +21,8 @@ import numpy as np
 import pandas as pd
 
 from backtesting_engine.constants import CLOSE_COLUMN, SIGNAL_COLUMN
+from backtesting_engine.exceptions import InvalidDataError
 from backtesting_engine.strategies.constants import LONG_MA_COLUMN, SHORT_MA_COLUMN
-from backtesting_engine.strategies.exceptions import InvalidDataError
 from backtesting_engine.strategies.interfaces import IStrategy
 
 
@@ -31,17 +31,9 @@ class SMACrossoverStrategy(IStrategy):
         self.data = data
         self.short_window = short_window
         self.long_window = long_window
-        self.validate_data()
+        self._validate_data()
 
-    def validate_data(self) -> None:
-        if self.data.empty:
-            raise InvalidDataError("Data cannot be empty.")
-
-        if CLOSE_COLUMN not in self.data.columns:
-            raise InvalidDataError(
-                "Data must contain a 'Close' column for SMA calculations."
-            )
-
+    def _validate_data(self) -> None:
         if len(self.data) < max(self.short_window, self.long_window):
             raise InvalidDataError(
                 "Data length must be greater than the maximum of short and long window sizes."

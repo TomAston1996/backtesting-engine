@@ -22,13 +22,3 @@ class IStrategy(ABC):
             pd.DataFrame: DataFrame containing the generated signals and any additional data.
         """
         pass
-
-    @abstractmethod
-    def validate_data(self) -> None:
-        """
-        Validate the data before running the strategy.
-
-        Raises:
-            InvalidDataError: If the data is invalid.
-        """
-        pass
