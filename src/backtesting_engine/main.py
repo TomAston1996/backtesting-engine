@@ -11,7 +11,9 @@ from backtesting_engine.data.data_loader import DataLoader
 from backtesting_engine.data.lru_cache import PersistentLRUCache
 from backtesting_engine.engine import BTXEngine
 from backtesting_engine.interfaces import EngineConfig, EngineContext
+from backtesting_engine.strategies.buy_and_hold import BuyAndHoldStrategy
 from backtesting_engine.strategies.mean_reversion import MeanReversionStrategy
+from backtesting_engine.strategies.momentum import MomentumStrategy
 from backtesting_engine.strategies.sma_crossover import SMACrossoverStrategy
 
 
@@ -29,6 +31,8 @@ def main() -> None:
     strategies = {
         "sma_crossover": SMACrossoverStrategy(data=data, short_window=50, long_window=100),
         "mean_reversion": MeanReversionStrategy(data=data, window=20, threshold=0.02),
+        "momentum": MomentumStrategy(data=data, window=10, threshold=0.01),
+        "buy_and_hold": BuyAndHoldStrategy(data=data),
     }
 
     engine = BTXEngine(
@@ -38,7 +42,7 @@ def main() -> None:
             sim_id="002",
             data=data,
             ticker=TICKER,
-            strategy=strategies["mean_reversion"],  # Change strategy here as needed
+            strategy=strategies["buy_and_hold"],  # Change strategy here as needed
             metrics_creator=BacktestMetricCreator,
             plot_generator=PlotGenerator,
         ),

@@ -8,6 +8,7 @@ they deviate significantly from this average, they are likely to return to it.
 Signals:
     - Buy signal (1) is generated when the current price is below the moving average by a certain threshold percentage.
     - Sell signal (-1) is generated when the current price is above the moving average by a certain threshold percentage.
+    - Hold signal (0) is generated when the price is within the threshold range of the moving average.
 '''
 
 import numpy as np

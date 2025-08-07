@@ -15,6 +15,11 @@ bullish trend, and a buy signal is generated (1). Conversely, if the short-term 
 long-term SMA (short-term SMA < long-term SMA), it indicates a potential bearish trend, and a sell signal
 is generated (-1). If there is no crossover, the signal remains at 0, indicating that no action should be
 taken.
+
+Signals:
+    - Buy signal (1) is generated when the short-term SMA crosses above the long-term SMA
+    - Sell signal (-1) is generated when the short-term SMA crosses below the long-term SMA
+    - Hold signal (0) is generated when there is no crossover
 """
 
 import numpy as np
@@ -28,6 +33,16 @@ from backtesting_engine.strategies.interfaces import IStrategy
 
 class SMACrossoverStrategy(IStrategy):
     def __init__(self, data: pd.DataFrame, short_window: int, long_window: int) -> None:
+        """
+        Initialize the SMA Crossover Strategy.
+
+        Args:
+            data (pd.DataFrame): DataFrame containing historical stock data with a 'Close' column.
+            short_window (int): The window size for the short-term moving average. Common values are 10, 20, etc.
+            long_window (int): The window size for the long-term moving average. Common values are 50, 100, etc.
+        Raises:
+            InvalidDataError: If the data length is less than the maximum of short and long window sizes.
+        """
         self.data = data
         self.short_window = short_window
         self.long_window = long_window

@@ -9,3 +9,6 @@ LONG_MA_COLUMN = "Long_MA" # Column for long moving averages
 
 # Mean Reversion Strategy Constants
 MA_COLUMN = "MA" # Column for moving averages in mean reversion strategy
+
+# Momentum Strategy Constants
+MOMENTUM_COLUMN = "Momentum" # Column for momentum values
