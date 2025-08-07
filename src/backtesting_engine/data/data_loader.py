@@ -8,6 +8,7 @@ from typing import Literal, Optional
 import pandas as pd
 import yfinance as yf
 
+from backtesting_engine.data.interfaces import ILocalCache
 from backtesting_engine.data.lru_cache import CacheKey, PersistentLRUCache
 
 
@@ -19,7 +20,7 @@ class DataLoader:
     to avoid redundant data fetching.
     """
 
-    def __init__(self, cache: Optional[PersistentLRUCache] = None) -> None:
+    def __init__(self, cache: Optional[ILocalCache] = None) -> None:
         self.cache = cache or PersistentLRUCache()
 
     def load(

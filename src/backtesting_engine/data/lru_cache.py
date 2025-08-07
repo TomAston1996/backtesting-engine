@@ -15,6 +15,8 @@ from typing import Any, NamedTuple
 
 from filelock import FileLock
 
+from backtesting_engine.data.interfaces import ILocalCache
+
 
 class CacheKey(NamedTuple):
     ticker: str
@@ -25,7 +27,7 @@ class CacheKey(NamedTuple):
         return f"{self.ticker}_{self.start_date}_{self.end_date}"
 
 
-class PersistentLRUCache:
+class PersistentLRUCache(ILocalCache):
     """A simple LRU cache implementation that persists to disk using pickle."""
 
     def __init__(self, cache_dir: str = ".cache", cache_file: str = "lru_cache.pkl", max_size: int = 10) -> None:
