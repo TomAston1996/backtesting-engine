@@ -15,15 +15,18 @@ A simple, extensible Python backtesting engine for evaluating trading strategies
 
 ##  📑 Table of Contents
 
-- [🧑‍💻 Tech Stack](#🧑‍💻-tech-stack)
-- [📖 Background: What is Backtesting?](#📖-background-what-is-backtesting)
-- [📝 Configuration File](#📝-configuration-file)
-- [📝 Results](#📝-results)
-- [📦 Getting Started](#📦-getting-started)
-  - [🔧 Installation](#🔧-installation)
-  - [✅ Running Tests](#✅-running-tests)
-  - [🚀 Running the App Locally](#🚀-running-the-app-locally)
-- [👭🏻 Contributing](#👭🏻-contributing)
+## 📑 Table of Contents
+
+- [🧑‍💻 Tech Stack](#tech-stack)
+- [📖 Background: What is Backtesting?](#background-what-is-backtesting)
+- [📊 Strategies Currently Supported](#strategies-currently-supported)
+- [📝 Configuration File](#configuration-file)
+- [📝 Results](#results)
+- [📦 Getting Started](#getting-started)
+  - [🔧 Installation](#installation)
+  - [✅ Running Tests](#running-tests)
+  - [🚀 Running the App Locally](#running-the-app-locally)
+- [👭🏻 Contributing](#contributing)
   - [Adding Dependencies](#adding-dependencies)
   - [Adding Dev Dependencies](#adding-dev-dependencies)
 - [📬 Contact](#contact)
@@ -47,6 +50,14 @@ By simulating trades over time, backtesting allows quants and traders to:
 - Compare strategies using objective metrics like Sharpe Ratio or Win Rate
 - Test the impact of transaction costs and slippage
 - Avoid overfitting through walk-forward analysis or out-of-sample testing
+
+
+## 📊 Strategies Currently Supported
+
+- Buy & Hold
+- Mean Reversion
+- Momentum
+- SMA Crossover
 
 
 ## 📝 Configuration File
