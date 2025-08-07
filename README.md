@@ -15,19 +15,20 @@ A simple, extensible Python backtesting engine for evaluating trading strategies
 
 ## 📑 Table of Contents
 
-- [Tech Stack](#-tech-stack)
-- [Background: What is Backtesting?](#-background-what-is-backtesting)
-- [Strategies Currently Supported](#-strategies-currently-supported)
-- [Configuration File](#-configuration-file)
-- [Results](#-results)
-- [Getting Started](#-getting-started)
-  - [Installation](#-installation)
-  - [Running Tests](#-running-tests)
-  - [Running the App Locally](#-running-the-app-locally)
-- [Contributing](#-contributing)
-  - [Adding Dependencies](#-adding-dependencies)
-  - [Adding Dev Dependencies](#-adding-dev-dependencies)
-- [Contact](#-contact)
+- [🧑‍💻 Tech Stack](#-tech-stack)
+- [📖 Background: What is Backtesting?](#-background-what-is-backtesting)
+- [📊 Strategies Currently Supported](#-strategies-currently-supported)
+- [📝 Configuration File](#-configuration-file)
+- [📝 Results](#-results)
+- [📦 Getting Started](#-getting-started)
+  - [🔧 Installation](#-installation)
+  - [✅ Running Tests](#-running-tests)
+  - [🚀 Running the App Locally](#-running-the-app-locally)
+- [👭🏻 Contributing](#-contributing)
+  - [🧩 Adding Dependencies](#-adding-dependencies)
+  - [🧪 Adding Dev Dependencies](#-adding-dev-dependencies)
+- [📬 Contact](#-contact)
+
 
 
 ## 🧑‍💻 Tech Stack
