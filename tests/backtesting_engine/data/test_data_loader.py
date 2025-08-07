@@ -25,24 +25,6 @@ def sample_df() -> pd.DataFrame:
     )
 
 
-@pytest.mark.parametrize(
-    "df, expected_error",
-    [
-        (pd.DataFrame(), "empty"),
-        (pd.DataFrame({"Close": [100]}, index=[0]), "DatetimeIndex"),
-        (pd.DataFrame({"Open": [100]}, index=pd.to_datetime(["2022-01-01"])), "Close"),
-        (pd.DataFrame({"Close": [None]}, index=pd.to_datetime(["2022-01-01"])), "NaN"),
-    ],
-)
-def test_validate_data_invalid_cases_raise(df: pd.DataFrame, expected_error: str) -> None:
-    # Arrange
-    loader = DataLoader()
-
-    # Act & Assert
-    with pytest.raises(InvalidDataError, match=re.escape(expected_error)):
-        loader.validate_data(df)
-
-
 @pytest.fixture
 def multiindex_df():
     arrays = [["Open", "Close"], ["USD", "USD"]]
@@ -63,6 +45,24 @@ def dataloader(tmp_path: Any) -> DataLoader:
     """Returns a DataLoader with a fresh PersistentLRUCache in a temporary directory"""
     cache = PersistentLRUCache(cache_dir=tmp_path, cache_file="lru_cache.pkl", max_size=2)
     return DataLoader(cache=cache)
+
+
+@pytest.mark.parametrize(
+    "df, expected_error",
+    [
+        (pd.DataFrame(), "empty"),
+        (pd.DataFrame({"Close": [100]}, index=[0]), "DatetimeIndex"),
+        (pd.DataFrame({"Open": [100]}, index=pd.to_datetime(["2022-01-01"])), "Close"),
+        (pd.DataFrame({"Close": [None]}, index=pd.to_datetime(["2022-01-01"])), "NaN"),
+    ],
+)
+def test_validate_data_invalid_cases_raise(df: pd.DataFrame, expected_error: str) -> None:
+    # Arrange
+    loader = DataLoader()
+
+    # Act & Assert
+    with pytest.raises(InvalidDataError, match=re.escape(expected_error)):
+        loader.validate_data(df)
 
 
 def test_load_from_csv_valid(temp_path: Any, sample_df: pd.DataFrame) -> None:
