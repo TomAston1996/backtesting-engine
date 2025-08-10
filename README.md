@@ -67,38 +67,38 @@ Simulations are defined in a single **JSON** file with the following structure:
 
 ```json
 {
-    "simGroup": "example_sim_group",
-    "outputDirLocation": "./out",
+    "sim_group": "example_sim_group",
+    "output_dir_location": "./out",
     "author": "Tom Aston",
     "sims": [
         {
-            "simId": "001",
+            "sim_id": "001",
             "strategy": {
                 "type": "SMACrossover",
                 "fields": {
-                    "shortWindow": 50,
-                    "longWindow": 100
+                    "short_window": 50,
+                    "long_window": 100
                 }
             },
             "data": {
                 "source": "yfinance",
                 "ticker": "AAPL",
-                "startDate": "2020-01-02",
-                "endDate": "2023-01-01",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01",
             },
-            "simConfig": {
-                "initialCash": 100000,
+            "sim_config": {
+                "initial_cash": 100000,
                 "slippage": 0.01,
                 "commission": 0.001
             }
         },
         {
-            "simId": "002",
+            "sim_id": "002",
             "strategy": {
                 "type": "BuyAndHold",
             },
             "data": {...},
-            "simConfig": {...}
+            "sim_config": {...}
         }
     ]
 }

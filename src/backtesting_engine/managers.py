@@ -5,9 +5,7 @@ and running simulations based on the specified strategies and data.
 
 import json
 
-from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Literal
 
 from backtesting_engine.analytics.metrics import BacktestMetricCreator
 from backtesting_engine.analytics.plotter import PlotGenerator
@@ -24,7 +22,15 @@ from backtesting_engine.constants import (
 from backtesting_engine.data.data_loader import DataLoader
 from backtesting_engine.data.lru_cache import PersistentLRUCache
 from backtesting_engine.engine import BTXEngine
-from backtesting_engine.interfaces import EngineConfig, EngineContext
+from backtesting_engine.interfaces import (
+    DataConfig,
+    EngineConfig,
+    EngineContext,
+    QueueConfig,
+    SimConfig,
+    SimItem,
+    StrategyConfig,
+)
 from backtesting_engine.strategies.buy_and_hold import BuyAndHoldStrategy
 from backtesting_engine.strategies.mean_reversion import MeanReversionStrategy
 from backtesting_engine.strategies.momentum import MomentumStrategy
@@ -37,43 +43,6 @@ STRATEGIES = {
     "momentum": MomentumStrategy,
     "buy_and_hold": BuyAndHoldStrategy,
 }
-
-
-@dataclass
-class StrategyConfig:
-    type: str
-    fields: dict[str, Any]
-
-
-@dataclass
-class DataConfig:
-    ticker: str
-    start_date: str
-    end_date: str
-    source: Literal["yfinance", "csv"] = "yfinance"
-
-
-@dataclass
-class SimConfig:
-    initial_cash: float
-    slippage: float
-    commission: float
-
-
-@dataclass
-class SimItem:
-    sim_id: str
-    strategy: StrategyConfig
-    data: DataConfig
-    sim_config: SimConfig
-
-
-@dataclass
-class QueueConfig:
-    sim_group: str
-    output_dir_location: str
-    author: str
-    sims: list[SimItem]
 
 
 class QueueManager:

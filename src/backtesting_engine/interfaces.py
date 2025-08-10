@@ -3,6 +3,7 @@ This module defines the interfaces for the backtesting engine.
 """
 
 from dataclasses import dataclass
+from typing import Any, Literal
 
 import pandas as pd
 
@@ -35,3 +36,40 @@ class TradeLogEntry:
     action: str
     shares: int
     price: float
+
+
+@dataclass
+class StrategyConfig:
+    type: str
+    fields: dict[str, Any]
+
+
+@dataclass
+class DataConfig:
+    ticker: str
+    start_date: str
+    end_date: str
+    source: Literal["yfinance", "csv"] = "yfinance"
+
+
+@dataclass
+class SimConfig:
+    initial_cash: float
+    slippage: float
+    commission: float
+
+
+@dataclass
+class SimItem:
+    sim_id: str
+    strategy: StrategyConfig
+    data: DataConfig
+    sim_config: SimConfig
+
+
+@dataclass
+class QueueConfig:
+    sim_group: str
+    output_dir_location: str
+    author: str
+    sims: list[SimItem]
