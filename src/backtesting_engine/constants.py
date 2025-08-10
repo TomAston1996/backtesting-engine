@@ -12,3 +12,23 @@ TOTAL_VALUE_COLUMN = "Total_Value"  # total value of the portfolio including cas
 BUY = "BUY"
 SELL = "SELL"
 HOLD = "HOLD"
+
+
+# Queue Manager constants
+SIM_GROUP = "simGroup"
+OUTPUT_DIR_LOCATION = "outputDirLocation"
+AUTHOR = "author"
+SIMS = "sims"
+SIM_ID = "simId"
+STRATEGY = "strategy"
+DATA = "data"
+SOURCE = "source"
+TICKER = "ticker"
+START_DATE = "startDate"
+END_DATE = "endDate"
+SIM_CONFIG = "simConfig"
+INITIAL_CASH = "initialCash"
+SLIPPAGE = "slippage"
+COMMISSION = "commission"
+TYPE = "type"
+FIELDS = "fields"
