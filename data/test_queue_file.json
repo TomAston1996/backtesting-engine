@@ -1,0 +1,49 @@
+{
+    "sim_group": "example_sim_group",
+    "output_dir_location": "./out",
+    "author": "Tom Aston",
+    "sims": [
+        {
+            "sim_id": "001",
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            }
+        },
+        {
+            "sim_id": "002",
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            }
+        }
+    ]
+}
