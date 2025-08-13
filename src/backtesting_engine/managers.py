@@ -6,7 +6,9 @@ and running simulations based on the specified strategies and data.
 import json
 import multiprocessing as mp
 
+from multiprocessing import Queue
 from pathlib import Path
+from typing import TYPE_CHECKING, Optional
 
 from backtesting_engine.analytics.metrics import BacktestMetricCreator
 from backtesting_engine.analytics.plotter import PlotGenerator
@@ -38,6 +40,12 @@ from backtesting_engine.strategies.momentum import MomentumStrategy
 from backtesting_engine.strategies.sma_crossover import SMACrossoverStrategy
 
 
+if TYPE_CHECKING:
+    JobQueueType = Queue[SimItem]  # For static type checking
+else:
+    JobQueueType = Queue
+
+
 STRATEGIES = {
     "sma_crossover": SMACrossoverStrategy,
     "mean_reversion": MeanReversionStrategy,
@@ -45,50 +53,11 @@ STRATEGIES = {
     "buy_and_hold": BuyAndHoldStrategy,
 }
 
-def worker(job_queue: mp.Queue[SimItem], queue_config: QueueConfig) -> None:
-    while True:
-        try:
-            sim_item = job_queue.get_nowait()
-        except Exception:
-            break  # Queue is empty
-
-        data_loader = DataLoader(cache=PersistentLRUCache())
-        data = data_loader.load(
-            ticker=sim_item.data.ticker,
-            start_date=sim_item.data.start_date,
-            end_date=sim_item.data.end_date,
-            source=sim_item.data.source,
-        )
-
-        strategy_cls = STRATEGIES[sim_item.strategy.type.lower()]
-        strategy = strategy_cls(data=data, **sim_item.strategy.fields)
-
-        engine = BTXEngine(
-            config=EngineConfig(
-                initial_cash=sim_item.sim_config.initial_cash,
-                slippage=sim_item.sim_config.slippage,
-                commission=sim_item.sim_config.commission,
-            ),
-            context=EngineContext(
-                sim_group=queue_config.sim_group,
-                sim_id=sim_item.sim_id,
-                data=data,
-                ticker=sim_item.data.ticker,
-                strategy=strategy,
-                metrics_creator=BacktestMetricCreator,
-                plot_generator=PlotGenerator,
-            ),
-        )
-
-        print(f"[{queue_config.sim_group}:{sim_item.sim_id}] Starting...")
-        engine.run_backtest()
-        print(f"[{queue_config.sim_group}:{sim_item.sim_id}] Completed.")
-
 
 class QueueManager:
     """Manages a queue loaded from a JSON file"""
 
-    def __init__(self, queue_file_path: str, max_workers: int | None) -> None:
+    def __init__(self, queue_file_path: str, max_workers: Optional[int] = None) -> None:
         self.max_workers = max_workers if max_workers is not None else mp.cpu_count()
         self.queue_config = self._load_queue_config(queue_file_path=queue_file_path)
         self._create_output_directory()
@@ -126,35 +95,47 @@ class QueueManager:
         output_dir = Path(self.queue_config.output_dir_location)
         output_dir.mkdir(parents=True, exist_ok=True)
 
-    def _run_sim(self, sim_item: SimItem) -> None:
-        data_loader = DataLoader(cache=PersistentLRUCache())
-        data = data_loader.load(
-            ticker=sim_item.data.ticker,
-            start_date=sim_item.data.start_date,
-            end_date=sim_item.data.end_date,
-            source=sim_item.data.source,
-        )
+    def _worker(self, job_queue: "JobQueueType") -> None:
+        while True:
+            try:
+                sim_item = job_queue.get_nowait()
+            except Exception:
+                break  # Queue is empty
 
-        strategy = STRATEGIES[sim_item.strategy.type](data=data, **sim_item.strategy.fields)
-
-        engine = BTXEngine(
-            config=EngineConfig(
-                initial_cash=sim_item.sim_config.initial_cash,
-                slippage=sim_item.sim_config.slippage,
-                commission=sim_item.sim_config.commission,
-            ),
-            context=EngineContext(
-                sim_group=self.queue_config.sim_group,
-                sim_id=sim_item.sim_id,
-                data=data,
+            data_loader = DataLoader(cache=PersistentLRUCache())
+            data = data_loader.load(
                 ticker=sim_item.data.ticker,
-                strategy=strategy,
-                metrics_creator=BacktestMetricCreator,
-                plot_generator=PlotGenerator,
-            ),
-        )
+                start_date=sim_item.data.start_date,
+                end_date=sim_item.data.end_date,
+                source=sim_item.data.source,
+            )
 
-        engine.run_backtest()
+            strategy_cls = STRATEGIES.get(sim_item.strategy.type.lower())
+            if not strategy_cls:
+                raise ValueError(f"Unknown strategy type: {sim_item.strategy.type}")
+
+            strategy = strategy_cls(data=data, **sim_item.strategy.fields)
+
+            engine = BTXEngine(
+                config=EngineConfig(
+                    initial_cash=sim_item.sim_config.initial_cash,
+                    slippage=sim_item.sim_config.slippage,
+                    commission=sim_item.sim_config.commission,
+                ),
+                context=EngineContext(
+                    sim_group=self.queue_config.sim_group,
+                    sim_id=sim_item.sim_id,
+                    data=data,
+                    ticker=sim_item.data.ticker,
+                    strategy=strategy,
+                    metrics_creator=BacktestMetricCreator,
+                    plot_generator=PlotGenerator,
+                ),
+            )
+
+            print(f"[{self.queue_config.sim_group}:{sim_item.sim_id}] Starting...")
+            engine.run_backtest()
+            print(f"[{self.queue_config.sim_group}:{sim_item.sim_id}] Completed.")
 
     def run_all(self) -> None:
         manager = mp.Manager()
@@ -165,7 +146,7 @@ class QueueManager:
 
         processes: list[mp.Process] = []
         for _ in range(self.max_workers):
-            p = mp.Process(target=worker, args=(job_queue, self.queue_config))
+            p = mp.Process(target=self._worker, args=(job_queue,))
             p.start()
             processes.append(p)
 

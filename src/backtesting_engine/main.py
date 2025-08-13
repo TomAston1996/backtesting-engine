@@ -11,13 +11,14 @@ from backtesting_engine.data.data_loader import DataLoader
 from backtesting_engine.data.lru_cache import PersistentLRUCache
 from backtesting_engine.engine import BTXEngine
 from backtesting_engine.interfaces import EngineConfig, EngineContext
+from backtesting_engine.managers import QueueManager
 from backtesting_engine.strategies.buy_and_hold import BuyAndHoldStrategy
 from backtesting_engine.strategies.mean_reversion import MeanReversionStrategy
 from backtesting_engine.strategies.momentum import MomentumStrategy
 from backtesting_engine.strategies.sma_crossover import SMACrossoverStrategy
 
 
-def main() -> None:
+def run_single_sim() -> None:
     """
     Main function to run the backtesting engine with a sample strategy.
     """
@@ -51,5 +52,11 @@ def main() -> None:
     engine.run_backtest()
 
 
+def run_multiple_sims() -> None:
+    QUEUE_FILE_PATH = "data/test_queue_config.json"
+    queue_manager = QueueManager(queue_file_path=QUEUE_FILE_PATH)
+    queue_manager.run_all()
+
+
 if __name__ == "__main__":
-    main()
+    run_multiple_sims()
