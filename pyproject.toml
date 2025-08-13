@@ -1,5 +1,5 @@
 [project]
-name = "backtesting-engine"
+name = "backtester"
 version = "0.1.0"
 description = "A backtesting engine for trading strategies."
 readme = "README.md"
@@ -33,6 +33,9 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/backtesting_engine"]
+
+[tool.uv.workspace]
+members = [".",]
 
 [tool.pyright]
 pythonVersion = "3.11"

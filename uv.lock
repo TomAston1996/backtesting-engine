@@ -7,7 +7,7 @@ resolution-markers = [
 ]
 
 [[package]]
-name = "backtesting-engine"
+name = "backtester"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
