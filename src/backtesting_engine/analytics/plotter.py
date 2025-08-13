@@ -206,15 +206,17 @@ class PlotGenerator(IPlotGenerator):
 
     def _save(self, fig: go.Figure, filename: str) -> None:
         """
-        Save the plot to the structured output directory: out/<sim_group>/<ticker>_<filename>.png
+        Save the plot to the structured output directory: out/<sim_group>/<ticker>_<filename>.html
         """
         sim_dir = os.path.join(OUTPUT_DIR, self.sim_group, self.ticker)
         os.makedirs(sim_dir, exist_ok=True)
 
-        filename = f"{self.sim_id}_{self.strategy_name.lower()}_{filename}.png"
-        png_path = os.path.join(sim_dir, filename)
+        filename = f"{self.sim_id}_{self.strategy_name.lower()}_{filename}.html"
+        full_output_path = os.path.join(sim_dir, filename)
 
-        fig.write_image(png_path, width=1200, height=800)
+        # Note: needed to swtich to `write_html` temporarily instead of `write_image` for HTML output
+        # because kalaedo was causing issues with multiprocessing.
+        fig.write_html(full_output_path)
 
     def _update_background_colors_dark_mode(
         self, fig: go.Figure, title: str, xaxis_title: str, yaxis_title: str
