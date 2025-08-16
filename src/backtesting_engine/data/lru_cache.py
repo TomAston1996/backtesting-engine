@@ -9,6 +9,7 @@ Pickle is used as we are storing complex objects (like DataFrames) that need to 
 
 import os
 import pickle
+import time
 
 from collections import OrderedDict
 from typing import Any, NamedTuple
@@ -59,13 +60,21 @@ class PersistentLRUCache(ILocalCache):
             temp_path = self.cache_path + ".tmp"
             with open(temp_path, "wb") as f:
                 pickle.dump(self._cache, f)
-            os.replace(temp_path, self.cache_path)
+
+            for attempt in range(5):  # retry up to 5 times
+                try:
+                    os.replace(temp_path, self.cache_path)
+                    break
+                except PermissionError:
+                    if attempt == 4:
+                        raise
+                    time.sleep(0.1)  # wait 100ms before retry
 
     def get(self, key: CacheKey) -> Any:
         """Get an item from the cache."""
         if key in self._cache:
             self._cache.move_to_end(key)
-            self._save_cache()
+            # self._save_cache()
             return self._cache[key]
         return None
 

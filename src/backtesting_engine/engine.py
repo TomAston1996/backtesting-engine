@@ -54,8 +54,8 @@ class BTXEngine:
 
         # Calculate performance metrics after the backtest is complete
         metrics_creator = self.metrics_creator(df, self.ticker)
-        performance_metrics = metrics_creator.get_backtest_metrics()
-        performance_metrics.pretty_print()
+        metrics_creator.get_backtest_metrics()
+        # performance_metrics.pretty_print()
 
         # Generate plots for the backtest results
         plot_generator = self.plot_generator(df, self.strategy.__class__.__name__, self.context)

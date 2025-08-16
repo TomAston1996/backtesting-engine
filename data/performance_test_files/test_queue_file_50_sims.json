@@ -1,0 +1,1057 @@
+{
+    "sim_group": "example_sim_group",
+    "output_dir_location": "./out",
+    "author": "Tom Aston",
+    "sims": [
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "001"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "002"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "003"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "004"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "005"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "006"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "007"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "008"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "009"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "010"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "011"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "012"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "013"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "014"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "015"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "016"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "017"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "018"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "019"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "020"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "021"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "022"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "023"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "024"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "025"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "026"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "027"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "028"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "029"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "030"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "031"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "032"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "033"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "034"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "035"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "036"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "037"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "038"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "039"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "040"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "041"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "042"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "043"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "044"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "045"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "046"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "047"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "048"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "049"
+        },
+        {
+            "strategy": {
+                "type": "sma_crossover",
+                "fields": {
+                    "short_window": 50,
+                    "long_window": 100
+                }
+            },
+            "data": {
+                "source": "yfinance",
+                "ticker": "AAPL",
+                "start_date": "2020-01-02",
+                "end_date": "2023-01-01"
+            },
+            "sim_config": {
+                "initial_cash": 100000,
+                "slippage": 0.01,
+                "commission": 0.001
+            },
+            "sim_id": "050"
+        }
+    ]
+}

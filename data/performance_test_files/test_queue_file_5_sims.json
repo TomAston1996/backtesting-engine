@@ -4,7 +4,6 @@
     "author": "Tom Aston",
     "sims": [
         {
-            "sim_id": "001",
             "strategy": {
                 "type": "sma_crossover",
                 "fields": {
@@ -22,10 +21,10 @@
                 "initial_cash": 100000,
                 "slippage": 0.01,
                 "commission": 0.001
-            }
+            },
+            "sim_id": "001"
         },
         {
-            "sim_id": "002",
             "strategy": {
                 "type": "sma_crossover",
                 "fields": {
@@ -43,10 +42,10 @@
                 "initial_cash": 100000,
                 "slippage": 0.01,
                 "commission": 0.001
-            }
+            },
+            "sim_id": "002"
         },
         {
-            "sim_id": "003",
             "strategy": {
                 "type": "sma_crossover",
                 "fields": {
@@ -64,10 +63,10 @@
                 "initial_cash": 100000,
                 "slippage": 0.01,
                 "commission": 0.001
-            }
+            },
+            "sim_id": "003"
         },
         {
-            "sim_id": "004",
             "strategy": {
                 "type": "sma_crossover",
                 "fields": {
@@ -85,10 +84,10 @@
                 "initial_cash": 100000,
                 "slippage": 0.01,
                 "commission": 0.001
-            }
+            },
+            "sim_id": "004"
         },
         {
-            "sim_id": "005",
             "strategy": {
                 "type": "sma_crossover",
                 "fields": {
@@ -106,7 +105,8 @@
                 "initial_cash": 100000,
                 "slippage": 0.01,
                 "commission": 0.001
-            }
+            },
+            "sim_id": "005"
         }
     ]
 }
