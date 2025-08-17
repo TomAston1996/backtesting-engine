@@ -9,6 +9,7 @@ To run a script use the following command:
 ```bash
 uv run python scripts/run_multiprocess_performance_tests.py
 uv run python scripts/generate_test_queue_file.py
+uv run python scripts/profile_backtesting_engine.py
 ```
 
 ## Performance Analysis: Sequential vs. Multiprocessing Simulations
