@@ -37,7 +37,7 @@ def run_single_sim() -> None:
     }
 
     engine = BTXEngine(
-        config=EngineConfig(initial_cash=100_000.0, slippage=0.01, commission=0.001),
+        config=EngineConfig(initial_cash=100_000.0, slippage=0.01, commission=0.001, generate_output=False),
         context=EngineContext(
             sim_group="local_test",
             sim_id="002",
@@ -59,4 +59,4 @@ def run_multiple_sims() -> None:
 
 
 if __name__ == "__main__":
-    run_multiple_sims()
+    run_single_sim()

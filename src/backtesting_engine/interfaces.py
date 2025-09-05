@@ -16,6 +16,7 @@ class EngineConfig:
     slippage: float = 0.0
     commission: float = 0.0
     initial_cash: float = 100_000.0  # Default initial cash for backtesting
+    generate_output: bool = True  # Whether to generate output files
 
 
 @dataclass

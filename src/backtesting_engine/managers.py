@@ -121,6 +121,7 @@ class QueueManager:
                     initial_cash=sim_item.sim_config.initial_cash,
                     slippage=sim_item.sim_config.slippage,
                     commission=sim_item.sim_config.commission,
+                    generate_output=False,
                 ),
                 context=EngineContext(
                     sim_group=self.queue_config.sim_group,

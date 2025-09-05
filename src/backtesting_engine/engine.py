@@ -41,6 +41,7 @@ class BTXEngine:
         self.initial_cash = config.initial_cash
         self.slippage = config.slippage
         self.commission = config.commission
+        self.config = config
 
         self.trade_log: list[TradeLogEntry] = []
 
@@ -58,8 +59,9 @@ class BTXEngine:
         # performance_metrics.pretty_print()
 
         # Generate plots for the backtest results
-        plot_generator = self.plot_generator(df, self.strategy.__class__.__name__, self.context)
-        plot_generator.generate()
+        if self.config.generate_output:
+            plot_generator = self.plot_generator(df, self.strategy.__class__.__name__, self.context)
+            plot_generator.generate()
 
         return df
 

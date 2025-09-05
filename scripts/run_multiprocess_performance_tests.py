@@ -63,7 +63,7 @@ def run_single_sim(sim_id: int) -> None:
     data = data_loader.load(ticker=TICKER, start_date=START_DATE, end_date=END_DATE, source="yfinance")
 
     engine = BTXEngine(
-        config=EngineConfig(initial_cash=100_000.0, slippage=0.01, commission=0.001),
+        config=EngineConfig(initial_cash=100_000.0, slippage=0.01, commission=0.001, generate_output=False),
         context=EngineContext(
             sim_group="local_test",
             sim_id=str(sim_id),
