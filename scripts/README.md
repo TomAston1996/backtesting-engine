@@ -22,13 +22,9 @@ The tests were performed with varying numbers of simulations: `5`, `50`, `100`, 
 
 ![Performance Analysis](../data/performance_test_results/performance_comparison.png)
 
-**For small workloads (5 simulations):**
+**For small workloads (5, 50 simulations):**
 
 Sequential execution is faster. Multiprocessing introduces overhead (process creation, inter-process communication, etc.), which outweighs the benefits when the number of tasks is very small.
-
-**For medium workloads (50–100 simulations):**
-
-Multiprocessing begins to show clear benefits. At 100 simulations, multiprocessing runs faster than sequential execution.
 
 **For large workloads (300 simulations):**
 
