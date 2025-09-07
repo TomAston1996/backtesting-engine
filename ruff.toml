@@ -26,6 +26,8 @@ exclude = [
     "node_modules",
     "site-packages",
     "venv",
+    ".ipynb",
+    "notebooks/*.ipynb",
 ]
 
 line-length = 120

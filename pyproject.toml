@@ -16,6 +16,20 @@ dependencies = [
     "filelock>=3.18.0",
     "kaleido>=1.0.0",
     "snakeviz>=2.2.2",
+    "jupyterlab>=4.4.7",
+    "notebook>=7.4.5",
+    "ipykernel>=6.30.1",
+    "seaborn>=0.13.2",
+    "scipy>=1.16.1",
+    "scikit-learn>=1.7.1",
+    "bokeh>=3.8.0",
+    "ipywidgets>=8.1.7",
+    "jupyter-contrib-nbextensions>=0.7.0",
+    "jupyterlab-lsp>=5.2.0",
+    "ipyparallel>=9.0.1",
+    "jupyterlab-git>=0.51.2",
+    "pandas-datareader>=0.10.0",
+    "statsmodels>=0.14.5",
 ]
 
 [tool.uv]
@@ -49,6 +63,7 @@ exclude = [
   "build/",
   "dist/",
   "venv/",
+  "notebooks/",
 ]
 reportMissingTypeStubs = false
 reportMissingImports = true
