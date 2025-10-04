@@ -1,6 +1,6 @@
 # 🤝 Contributing to Backtesting Engine
 
-Thanks for your interest in contributing! 🎉  
+Thanks for your interest in contributing! 🎉
 This project simulates trading strategies on historical market data — all improvements, bug fixes, and ideas are welcome.
 
 ---
