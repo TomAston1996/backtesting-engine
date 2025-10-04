@@ -9,7 +9,7 @@ This project simulates trading strategies on historical market data — all impr
 
 1. Fork and clone the repo:
  ```bash
- git clone https://github.com/<your-username>/backtesting-engine.git
+ git clone https://github.com/TomAston1996/backtesting-engine.git
  cd backtesting-engine
  ```
 
